@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
 import { RemoteFile } from "generic-filehandle";
 import NCList from "@gmod/nclist";
@@ -27,9 +27,15 @@ async function accessStore() {
     start: start,
     end: end,
   })) {
-    console.log(feature);
-    if (feature.get("name") == gene) {
-      return feature;
+    if (feature.get("name") === gene) {
+      const children = feature.get("subfeatures");
+      children.forEach(function looker(value, index, array) {
+          console.log(value.get('name'))
+          if (value.get('name') === transcript){
+              console.log('returning')
+              return value;
+          }
+      })
     }
   }
 }
@@ -53,31 +59,18 @@ export default function App() {
   } else if (!result) {
     return <div>Loading...</div>;
   } else {
+    console.log(result)
     return (
-    <div className="App">
-       result 
-/*      <SequencePanel
-        mode={"protein"}
-        sequence={obj.sequence}
-        feature={obj.feature}
-      />
-      <SequencePanel
-        mode={"cds"}
-        sequence={obj.sequence}
-        feature={result.feature}
-      />
-      <SequencePanel
-        mode={"cdna"}
-        sequence={obj.sequence}
-        feature={obj.feature}
-      />
-      <SequencePanel
-        mode={"gene_updownstream_collapsed_intron"}
-        sequence={obj.sequence}
-        feature={obj.feature}
-      />
-*/
-    </div>
+      <ul>
+        {result.map((value) => {
+          return (
+            <li key={value.id()}>
+              {value.get("name")} {value.get("seq_id")}:
+              {value.get("start")}-{value.get("end")}
+            </li>
+          );
+        })}
+      </ul>
     );
   }
 }
