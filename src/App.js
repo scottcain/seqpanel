@@ -27,16 +27,16 @@ async function accessStore() {
     start: start,
     end: end,
   })) {
+    var save = ''
     if (feature.get("name") === gene) {
       const children = feature.get("subfeatures");
       children.forEach(function looker(value, index, array) {
-          console.log(value.get('name'))
           if (value.get('name') === transcript){
-              console.log('returning')
-              return value;
+              save = value;
           }
       })
     }
+    return save;
   }
 }
 
@@ -62,14 +62,10 @@ export default function App() {
     console.log(result)
     return (
       <ul>
-        {result.map((value) => {
-          return (
-            <li key={value.id()}>
-              {value.get("name")} {value.get("seq_id")}:
-              {value.get("start")}-{value.get("end")}
+            <li key={result.id()}>
+              {result.get("name")} {result.get("seq_id")}:
+              {result.get("start")}-{result.get("end")}
             </li>
-          );
-        })}
       </ul>
     );
   }
