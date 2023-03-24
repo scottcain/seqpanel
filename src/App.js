@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
 import { RemoteFile } from "generic-filehandle";
 import NCList from "@gmod/nclist";
+import { BgzipIndexedFasta } from "@gmod/indexedfasta";
 
 const queryParameters = new URLSearchParams(window.location.search)
   const assembly = queryParameters.get("assembly")
@@ -40,14 +41,48 @@ async function accessStore() {
   }
 }
 
+async function accessFasta() {
+
+  const t = new BgzipIndexedFasta({
+    filehandle: new RemoteFile('https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS278.genomic.fa.gz'),
+    faiFilehandle: new RemoteFile('https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS278.genomic.fa.gz.fai'),
+    gziFilehandle: new RemoteFile('https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS278.genomic.fa.gz.gzi'),
+    chunkSizeLimit: 500000
+  })
+
+  const seq = await t.getSequence(refseq, start-1, end);
+  const downstream = await t.getSequence(refseq, start-501, start-1);
+  const upstream   = await t.getSequence(refseq, end, end+501);
+
+  const sequence = {
+      seq: seq,
+      upstream: upstream,
+      downstream: downstream
+  };
+
+  return sequence;
+}
+
+async function assembleBundle() {
+    const feature = await accessStore();
+    const sequence= await accessFasta();
+
+    const object = {
+        feature: feature,
+        sequence: sequence
+    }
+
+    return object;  
+}
 
 export default function App() {
   const [result, setResult] = useState();
   const [error, setError] = useState();
+
   useEffect(() => {
     (async () => {
       try {
-        const stuff = await accessStore();
+        const stuff = await assembleBundle();
         setResult(stuff);
       } catch (e) {
         setError(e);
@@ -61,12 +96,13 @@ export default function App() {
   } else {
     console.log(result)
     return (
-      <ul>
-            <li key={result.id()}>
-              {result.get("name")} {result.get("seq_id")}:
-              {result.get("start")}-{result.get("end")}
-            </li>
-      </ul>
+     <div className="App">
+      <SequencePanel
+        mode={"gene_updownstream_collapsed_intron"}
+        sequence={result.sequence}
+        feature={result.feature}
+      />
+     </div>
     );
   }
 }
