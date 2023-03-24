@@ -29,6 +29,7 @@ async function accessStore() {
     end: end,
   })) {
     var save = ''
+       //keep only the transcript we're looking for
     if (feature.get("name") === gene) {
       const children = feature.get("subfeatures");
       children.forEach(function looker(value, index, array) {
@@ -43,12 +44,26 @@ async function accessStore() {
 
 async function accessFasta() {
 
+  const fastaAssembly = assembly.replace("_P", ".P");
+
+  const fastaFile = 'https://s3.amazonaws.com/wormbase-modencode/fasta/current/'+fastaAssembly+'.WS284.genomic.fa.gz';
+  console.log(fastaFile)
+
+  const fastaFilehandle = new RemoteFile(fastaFile);
+  const faiFilehandle   = new RemoteFile(fastaFile+'.fai');
+  const gziFilehandle   = new RemoteFile(fastaFile+'.gzi');
+  console.log(fastaFilehandle);
+  console.log(faiFilehandle);
+  console.log(gziFilehandle);
+
   const t = new BgzipIndexedFasta({
-    filehandle: new RemoteFile('https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS278.genomic.fa.gz'),
-    faiFilehandle: new RemoteFile('https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS278.genomic.fa.gz.fai'),
-    gziFilehandle: new RemoteFile('https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS278.genomic.fa.gz.gzi'),
+    filehandle: fastaFilehandle,
+    faiFilehandle: faiFilehandle,
+    gziFilehandle: gziFilehandle,
     chunkSizeLimit: 500000
   })
+
+  console.log(t)
 
   const seq = await t.getSequence(refseq, start-1, end);
   const downstream = await t.getSequence(refseq, start-501, start-1);
