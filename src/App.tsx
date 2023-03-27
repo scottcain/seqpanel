@@ -94,6 +94,7 @@ async function assembleBundle() {
   const object = {
     feature: feature,
     sequence: sequence,
+    mode: 'cds',
     intronBp: 10
   };
 
@@ -123,7 +124,7 @@ export default function App() {
     return (
       <div className="App">
         <SequencePanel
-          mode={"cdna"}
+          mode={"protein"}
           sequence={result.sequence}
           feature={result.feature}
         />
