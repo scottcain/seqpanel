@@ -32,14 +32,12 @@ async function accessStore() {
     start: start,
     end: end,
   })) {
-    var save = "";
     //keep only the transcript we're looking for
     if (feature.get("name") === gene) {
       return feature
         .get("subfeatures")
         .find((value: any) => value.get("name") === transcript);
     }
-    return save;
   }
 }
 
@@ -64,9 +62,6 @@ async function accessFasta() {
   const fastaFilehandle = new RemoteFile(fastaFile);
   const faiFilehandle = new RemoteFile(fastaFile + ".fai");
   const gziFilehandle = new RemoteFile(fastaFile + ".gzi");
-  console.log(fastaFilehandle);
-  console.log(faiFilehandle);
-  console.log(gziFilehandle);
 
   const t = new BgzipIndexedFasta({
     fasta: fastaFilehandle,
@@ -75,16 +70,18 @@ async function accessFasta() {
     chunkSizeLimit: 500000,
   });
 
-  console.log(t);
-
   const seq = await t.getSequence(refseq, +start - 1, +end);
-  const downstream = await t.getSequence(refseq, +start - 501, +start - 1);
-  const upstream = await t.getSequence(refseq, +end, +end + 501);
+  const upstream = await t.getSequence(refseq, +start - 501, +start - 1);
+  const downstream = await t.getSequence(refseq, +end, +end + 500);
+
+  console.log(seq);
+  console.log(upstream);
+  console.log(downstream);
 
   const sequence = {
     seq: seq,
     upstream: upstream,
-    downstream: downstream,
+    downstream: downstream
   };
 
   return sequence;
@@ -97,6 +94,7 @@ async function assembleBundle() {
   const object = {
     feature: feature,
     sequence: sequence,
+    intronBp: 10
   };
 
   return object;
@@ -125,7 +123,7 @@ export default function App() {
     return (
       <div className="App">
         <SequencePanel
-          mode={"gene_updownstream_collapsed_intron"}
+          mode={"cdna"}
           sequence={result.sequence}
           feature={result.feature}
         />
