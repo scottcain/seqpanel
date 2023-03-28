@@ -13,6 +13,7 @@ const start = queryParameters.get("start");
 const end = queryParameters.get("end");
 const gene = queryParameters.get("gene");
 const transcript = queryParameters.get("transcript");
+const mode = queryParameters.get("mode");
 
 //construct an object that has feature data from nclist and seq data from fasta
 //(including upstream and downstream)
@@ -79,10 +80,11 @@ async function assembleBundle() {
   const sequence = await accessFasta();
 
   const f = new NCListFeature(feature);
+  console.log(mode)
   return {
     feature: f.toJSON(),
     sequence,
-    mode: "cds",
+    mode: mode,
     intronBp: 10,
   };
 }
@@ -107,31 +109,22 @@ export default function App() {
     return <div>Loading...</div>;
   } else {
     return (
+/*      Available mode options include: 
+   genomic
+   genomic_sequence_updown
+   cds
+   cdna
+   protein
+   gene
+   gene_collapsed_intron
+   gene_updownstream
+   gene_updownstream_collapsed_intron 
+*/
       <div className="App">
         <SequencePanel
-          mode={"gene"}
+          mode={result.mode as any}
           sequence={result.sequence}
-          feature={result.feature}
-        />
-        <SequencePanel
-          mode={"gene_updownstream_collapsed_intron"}
-          sequence={result.sequence}
-          feature={result.feature}
-        />
-        <SequencePanel
-          mode={"cds"}
-          sequence={result.sequence}
-          feature={result.feature}
-        />
-        <SequencePanel
-          mode={"cdna"}
-          sequence={result.sequence}
-          feature={result.feature}
-        />
-        <SequencePanel
-          mode={"protein"}
-          sequence={result.sequence}
-          feature={result.feature}
+          feature={result.feature as any}
         />
       </div>
     );
