@@ -3,6 +3,7 @@ import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
 import { RemoteFile } from "generic-filehandle";
 import NCList from "@gmod/nclist";
 import { BgzipIndexedFasta } from "@gmod/indexedfasta";
+import NCListFeature from "./NCListFeature";
 
 const queryParameters = new URLSearchParams(window.location.search);
 const assembly = queryParameters.get("assembly");
@@ -13,16 +14,12 @@ const end = queryParameters.get("end");
 const gene = queryParameters.get("gene");
 const transcript = queryParameters.get("transcript");
 
-//construct an object that has feature data from nclist and seq data from fasta (including upstream and downstream)
+//construct an object that has feature data from nclist and seq data from fasta
+//(including upstream and downstream)
 
 async function accessStore() {
   const store = new NCList({
-    baseUrl:
-      "https://s3.amazonaws.com/agrjbrowse/MOD-jbrowses/WormBase/WS" +
-      release +
-      "/" +
-      assembly +
-      "/",
+    baseUrl: `https://s3.amazonaws.com/agrjbrowse/MOD-jbrowses/WormBase/WS${release}/${assembly}/`,
     urlTemplate: "tracks/Curated_Genes/{refseq}/trackData.jsonz",
     readFile: (url: string) => new RemoteFile(url).readFile(),
   });
@@ -53,11 +50,7 @@ async function accessFasta() {
   }
   const fastaAssembly = assembly.replace("_P", ".P");
 
-  const fastaFile =
-    "https://s3.amazonaws.com/wormbase-modencode/fasta/current/" +
-    fastaAssembly +
-    ".WS284.genomic.fa.gz";
-  console.log(fastaFile);
+  const fastaFile = `https://s3.amazonaws.com/wormbase-modencode/fasta/current/${fastaAssembly}.WS284.genomic.fa.gz`;
 
   const fastaFilehandle = new RemoteFile(fastaFile);
   const faiFilehandle = new RemoteFile(fastaFile + ".fai");
@@ -74,42 +67,35 @@ async function accessFasta() {
   const upstream = await t.getSequence(refseq, +start - 501, +start - 1);
   const downstream = await t.getSequence(refseq, +end, +end + 500);
 
-  console.log(seq);
-  console.log(upstream);
-  console.log(downstream);
-
-  const sequence = {
-    seq: seq,
-    upstream: upstream,
-    downstream: downstream
+  return {
+    seq: seq || "",
+    upstream: upstream || "",
+    downstream: downstream || "",
   };
-
-  return sequence;
 }
 
 async function assembleBundle() {
   const feature = await accessStore();
   const sequence = await accessFasta();
 
-  const object = {
-    feature: feature,
-    sequence: sequence,
-    mode: 'cds',
-    intronBp: 10
+  const f = new NCListFeature(feature);
+  return {
+    feature: f.toJSON(),
+    sequence,
+    mode: "cds",
+    intronBp: 10,
   };
-
-  return object;
 }
+type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
 
 export default function App() {
-  const [result, setResult] = useState<any>();
+  const [result, setResult] = useState<Bundle>();
   const [error, setError] = useState<unknown>();
 
   useEffect(() => {
     (async () => {
       try {
-        const stuff = await assembleBundle();
-        setResult(stuff);
+        setResult(await assembleBundle());
       } catch (e) {
         setError(e);
       }
@@ -120,7 +106,6 @@ export default function App() {
   } else if (!result) {
     return <div>Loading...</div>;
   } else {
-    console.log(result);
     return (
       <div className="App">
         <SequencePanel
