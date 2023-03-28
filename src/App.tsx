@@ -109,6 +109,26 @@ export default function App() {
     return (
       <div className="App">
         <SequencePanel
+          mode={"gene"}
+          sequence={result.sequence}
+          feature={result.feature}
+        />
+        <SequencePanel
+          mode={"gene_updownstream_collapsed_intron"}
+          sequence={result.sequence}
+          feature={result.feature}
+        />
+        <SequencePanel
+          mode={"cds"}
+          sequence={result.sequence}
+          feature={result.feature}
+        />
+        <SequencePanel
+          mode={"cdna"}
+          sequence={result.sequence}
+          feature={result.feature}
+        />
+        <SequencePanel
           mode={"protein"}
           sequence={result.sequence}
           feature={result.feature}
