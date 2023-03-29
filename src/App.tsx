@@ -80,7 +80,6 @@ async function assembleBundle() {
   const sequence = await accessFasta();
 
   const f = new NCListFeature(feature);
-  console.log(mode)
   return {
     feature: f.toJSON(),
     sequence,
