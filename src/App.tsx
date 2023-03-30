@@ -39,14 +39,14 @@ async function accessStore() {
   }
 }
 
-async function accessFasta() {
+async function accessFasta( fstart: number, fend: number) {
   if (!assembly) {
     throw new Error("no assembly specified");
   } else if (!refseq) {
     throw new Error("no refseq specified");
-  } else if (!start) {
+  } else if (!fstart) {
     throw new Error("no start coord specified");
-  } else if (!end) {
+  } else if (!fend) {
     throw new Error("no end coord specified");
   }
   const fastaAssembly = assembly.replace("_P", ".P");
@@ -64,9 +64,9 @@ async function accessFasta() {
     chunkSizeLimit: 500000,
   });
 
-  const seq = await t.getSequence(refseq, +start - 1, +end);
-  const upstream = await t.getSequence(refseq, +start - 501, +start - 1);
-  const downstream = await t.getSequence(refseq, +end, +end + 500);
+  const seq = await t.getSequence(refseq, +fstart - 1, +fend);
+  const upstream = await t.getSequence(refseq, +fstart - 501, +fstart - 1);
+  const downstream = await t.getSequence(refseq, +fend, +fend + 500);
 
   return {
     seq: seq || "",
@@ -77,7 +77,8 @@ async function accessFasta() {
 
 async function assembleBundle() {
   const feature = await accessStore();
-  const sequence = await accessFasta();
+  console.log(feature)
+  const sequence = await accessFasta(feature[1], feature[2]);
 
   const f = new NCListFeature(feature);
   return {
