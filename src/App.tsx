@@ -6,8 +6,9 @@ import { BgzipIndexedFasta } from "@gmod/indexedfasta";
 import NCListFeature from "./NCListFeature";
 
 const queryParameters = new URLSearchParams(window.location.search);
-const assembly = queryParameters.get("assembly");
-const release = queryParameters.get("release");
+const nclistbaseurl = 'https://s3.amazonaws.com/agrjbrowse/MOD-jbrowses/WormBase/WS287/c_elegans_PRJNA13758/';
+const urltemplate = 'tracks/Curated_Genes/{refseq}/trackData.jsonz';
+const fastaurl = 'https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS284.genomic.fa.gz';
 const refseq = queryParameters.get("refseq");
 const start = queryParameters.get("start");
 const end = queryParameters.get("end");
@@ -19,9 +20,25 @@ const mode = queryParameters.get("mode");
 //(including upstream and downstream)
 
 async function accessStore() {
+  if (!nclistbaseurl) {
+    throw new Error("no nclistbaseurl specified");
+  } else if (!urltemplate) {
+    throw new Error("no urltemplate specified");
+  } else if (!refseq) {
+    throw new Error("no refseq specified");    
+  } else if (!start) {
+    throw new Error("no start specified");
+  } else if (!end) {
+    throw new Error("no end specified");
+  } else if (!gene) {
+    throw new Error("no gene specified");
+  } else if (!transcript) {
+    throw new Error("no transcript specified");
+  }
+
   const store = new NCList({
-    baseUrl: `https://s3.amazonaws.com/agrjbrowse/MOD-jbrowses/WormBase/WS${release}/${assembly}/`,
-    urlTemplate: "tracks/Curated_Genes/{refseq}/trackData.jsonz",
+    baseUrl: nclistbaseurl,
+    urlTemplate: urltemplate,
     readFile: (url: string) => new RemoteFile(url).readFile(),
   });
 
@@ -40,22 +57,9 @@ async function accessStore() {
 }
 
 async function accessFasta( fstart: number, fend: number) {
-  if (!assembly) {
-    throw new Error("no assembly specified");
-  } else if (!refseq) {
-    throw new Error("no refseq specified");
-  } else if (!fstart) {
-    throw new Error("no start coord specified");
-  } else if (!fend) {
-    throw new Error("no end coord specified");
-  }
-  const fastaAssembly = assembly.replace("_P", ".P");
-
-  const fastaFile = `https://s3.amazonaws.com/wormbase-modencode/fasta/current/${fastaAssembly}.WS284.genomic.fa.gz`;
-
-  const fastaFilehandle = new RemoteFile(fastaFile);
-  const faiFilehandle = new RemoteFile(fastaFile + ".fai");
-  const gziFilehandle = new RemoteFile(fastaFile + ".gzi");
+  const fastaFilehandle = new RemoteFile(fastaurl);
+  const faiFilehandle = new RemoteFile(fastaurl + ".fai");
+  const gziFilehandle = new RemoteFile(fastaurl + ".gzi");
 
   const t = new BgzipIndexedFasta({
     fasta: fastaFilehandle,
@@ -64,9 +68,9 @@ async function accessFasta( fstart: number, fend: number) {
     chunkSizeLimit: 500000,
   });
 
-  const seq = await t.getSequence(refseq, +fstart - 1, +fend);
-  const upstream = await t.getSequence(refseq, +fstart - 501, +fstart - 1);
-  const downstream = await t.getSequence(refseq, +fend, +fend + 500);
+  const seq = await t.getSequence(refseq +'', +fstart , +fend);
+  const upstream = await t.getSequence(refseq + '', +fstart - 499, +fstart );
+  const downstream = await t.getSequence(refseq +'', +fend, +fend + 499);
 
   return {
     seq: seq || "",
@@ -77,7 +81,6 @@ async function accessFasta( fstart: number, fend: number) {
 
 async function assembleBundle() {
   const feature = await accessStore();
-  console.log(feature)
   const sequence = await accessFasta(feature[1], feature[2]);
 
   const f = new NCListFeature(feature);
