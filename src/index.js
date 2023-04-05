@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import GenericSeqPanel from "./SeqPanel.tsx";
+import GenericSeqPanel from "./GenericSeqPanel.tsx";
 
 ReactDOM.render(
   <React.StrictMode>
