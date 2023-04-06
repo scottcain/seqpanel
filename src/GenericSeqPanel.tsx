@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
-import assembleBundle from "./seqpanel-api.tsx";
+import assembleBundle from "./seqpanel-api.js";
 
 
 /*

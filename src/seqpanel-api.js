@@ -33,6 +33,7 @@ import { BgzipIndexedFasta } from "@gmod/indexedfasta";
 async function assembleBundle(
 		nclistbaseurl: string, 
 		urltemplate: string, 
+                fastaurl: string,
 		refseq: string, 
 		start: number,
 		end: number,
@@ -40,7 +41,7 @@ async function assembleBundle(
 		transcript: string
 ) {
     const feature = await accessStore(nclistbaseurl, urltemplate, refseq, start, end, gene, transcript);
-    const sequence = await accessFasta(refseq, feature[1], feature[2], fastaURL);
+    const sequence = await accessFasta(refseq, feature[1], feature[2], fastaurl);
 
     const f = new NCListFeature(feature);
     return {
@@ -119,7 +120,7 @@ async function accessStore(
 		readFile: (url: string) => new RemoteFile(url).readFile(),
 	});
 
-	for await (const feature of store.get(refName,
+	for await (const feature of store.get(refseq,
 		start, 
 		end)) {
 		//keep only the transcript we're looking for
