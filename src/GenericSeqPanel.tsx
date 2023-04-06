@@ -6,13 +6,20 @@ import assembleBundle from "./seqpanel-api.js";
 /*
  * Example implementation looks like
  *
- *  root.render(<SeqPanel 
- *      refseq="X"
- *      start=13201770
- *      end=13216729
- *      gene="WBGene00006749"
- *      transcript="R12H7.1a.2"
- *      mode="gene" />
+ *  root.render( 
+        <GenericSeqPanel
+          refseq="X"
+          start="13201770"
+          end="13216729"
+          gene="WBGene00006749"
+          transcript="R12H7.1a.2"
+          mode="protein"
+          nclistbaseurl="https://s3.amazonaws.com/agrjbrowse/MOD-jbrowses/WormBase/WS287/c_elegans_PRJNA13758/"
+          urltemplate="tracks/Curated_Genes/{refseq}/trackData.jsonz"
+          fastaurl="https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS284.genomic.fa.gz"
+        />
+    )
+ *      
  *
  */
 // Create a new component that renders a div
