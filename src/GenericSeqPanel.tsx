@@ -65,13 +65,15 @@ function GenericSeqPanel(props) {
   } else if (!result) {
     return <div>Loading...</div>;
   } else {
-	  return <div className="GenericSeqPanel">
+	  return (
+           <div className="GenericSeqPanel">
               <SequencePanel
 	  	mode={props.mode}
 	  	sequence={result.sequence}
 	  	feature={result.feature}
 	      />
-	  </div>;
+	   </div>
+          );
   }
 }
 
