@@ -1,5 +1,3 @@
-
-import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
 import { RemoteFile } from "generic-filehandle";
 import NCList from "@gmod/nclist";
 import NCListFeature from "./NCListFeature.ts";
@@ -96,7 +94,7 @@ async function accessFasta(
 
 //Create accessStore function
 //this function is called by the assembleBundle function
-//It is called with six arguments:
+//It is called with seven arguments:
 //nclistbaseurl: the base URL of the NCList file
 //urltemplate: the URL template for the NCList file
 //refseq: the reference sequence (name, like "chr1")
@@ -120,9 +118,11 @@ async function accessStore(
 		readFile: (url: string) => new RemoteFile(url).readFile(),
 	});
 
-	for await (const feature of store.get(refseq,
-		start, 
-		end)) {
+	for await (const feature of store.getFeatures({
+                      refName: refseq,
+                      start: start,
+                      end: end,
+        })) {
 		//keep only the transcript we're looking for
 		if (feature.get("name") === gene) {
 			return feature.get("subfeatures")
