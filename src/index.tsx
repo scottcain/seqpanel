@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import GenericSeqPanel from "./GenericSeqPanel.tsx";
+import GenericSeqPanel from "./GenericSeqPanel";
 
 ReactDOM.render(
   <React.StrictMode>
     <GenericSeqPanel
       refseq="X"
-      start="13201770"
-      end="13216729"
+      start={13201770}
+      end={13216729}
       gene="WBGene00006749"
       transcript="R12H7.1a.2"
       mode="protein"
