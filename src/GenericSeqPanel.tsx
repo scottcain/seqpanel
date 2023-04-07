@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
-import assembleBundle from "./seqpanel-api.js";
-
+import assembleBundle from "./seqpanel-api";
 
 /*
  * Example implementation looks like
  *
- *  root.render( 
+ *  root.render(
         <GenericSeqPanel
           refseq="X"
           start="13201770"
@@ -19,68 +18,52 @@ import assembleBundle from "./seqpanel-api.js";
           fastaurl="https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS284.genomic.fa.gz"
         />
     )
- *      
+ *
  *
  */
 // Create a new component that renders a div
 // and calls the API to get the sequence
 // and then renders the sequence
 
-function GenericSeqPanel(props) {
-
+function GenericSeqPanel(props: {
+  nclistbaseurl: string;
+  fastaurl: string;
+  refseq: string;
+  mode: string;
+  start: number;
+  end: number;
+  gene: string;
+  transcript: string;
+  urltemplate: string;
+}) {
   type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
 
   const [result, setResult] = useState<Bundle>();
   const [error, setError] = useState<unknown>();
 
   useEffect(() => {
-    if (!props.nclistbaseurl) {
-      throw new Error("no nclistbaseurl specified");
-    } else if (!props.urltemplate) {
-      throw new Error("no urltemplate specified");
-    } else if (!props.fastaurl) {
-      throw new Error("no fastaurl specified");
-    } else if (!props.refseq) {
-      throw new Error("no refseq specified");
-    } else if (!props.start) {
-      throw new Error("no start specified");
-    } else if (!props.end) {
-      throw new Error("no end specified");
-    } else if (!props.gene) {
-      throw new Error("no gene specified");
-    } else if (!props.transcript) {
-      throw new Error("no transcript specified");
-    }
     (async () => {
       try {
-        setResult(await assembleBundle(
-		props.nclistbaseurl, 
-		props.urltemplate, 
-		props.fastaurl,
-		props.refseq, 
-		props.start, 
-		props.end, 
-		props.gene, 
-		props.transcript));
+        setResult(await assembleBundle(props));
       } catch (e) {
         setError(e);
       }
     })();
-  }, []);
+  }, [props]);
   if (error) {
     return <div style={{ color: "red" }}>{`${error}`}</div>;
   } else if (!result) {
     return <div>Loading...</div>;
   } else {
-	  return (
-           <div className="GenericSeqPanel">
-              <SequencePanel
-	  	mode={props.mode}
-	  	sequence={result.sequence}
-	  	feature={result.feature}
-	      />
-	   </div>
-          );
+    return (
+      <div className="GenericSeqPanel">
+        <SequencePanel
+          mode={props.mode}
+          sequence={result.sequence}
+          feature={result.feature as any}
+        />
+      </div>
+    );
   }
 }
 
