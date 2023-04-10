@@ -11,16 +11,51 @@ This React component creates a div containing highlighted FASTA DNA sequence. It
 * the name of the gene and transcript for which the highlighted fasta is required
 * the "mode" of highlighting required (more on that below)
 
+### More usage details
+
+    <GenericSeqPanel
+      refseq="X"
+      start={13201770}
+      end={13216729}
+      gene="WBGene00006749"
+      transcript="R12H7.1a.2"
+      mode="protein"
+      nclistbaseurl="https://s3.amazonaws.com/agrjbrowse/MOD-jbrowses/WormBase/WS287/c_elegans_PRJNA13758/"
+      urltemplate="tracks/Curated_Genes/{refseq}/trackData.jsonz"
+      fastaurl="https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS284.genomic.fa.gz"
+    />
+
+Several items here a self explanatory: refseq, start, and end are location infomation. The props gene and transcript are the names of the features in the NClist data set.  The remaining items are described here:
+
+* mode - this is one of several keys that dictate what the output looks like. The options are:
+ * genomic - The stretch of sequence from start to end with no special highlighting
+ * genomic_sequence_updown - The strech of sequence from start to end with 500 base pairs of padding on both ends
+ * cds - The coding sequence of the mRNA that is the result of in silico splicing
+ * cdna - The CDS with UTRs added
+ * protein - The amino acid sequence that results from the cds in silico transcription
+ * gene - The genomic sequence from start to end with portions that are UTR and coding highlighted
+ * gene_collapsed_intron - same as gene, but the introns are compressed to 10 base pairs at the splice junction and the remainer replaced with elipses
+ * gene_updownstream - same as gene but with 500 bp of up and down stream sequence added 
+ * gene_updownstream_collapsed_intron - same as gene_collapsed_intron but with up and downstream padding added
+* nclistbaseurl - the base url for the NClist adapter (basically, it's the part before "tracks" in the url)
+* urltemplate - the rest of the url that the NClis adapter uses. Typically, this will have `{refseq}` in it that will be interpolated with the refseq info
+* fastaurl - the url to the fasta file. The location of the .fai and .gzi files will be assumed from this url
+
+### Implementation details
+
+This component makes use of three components developed by the JBrowse team:
+
+* NCList from "@gmod/nclist" - This is what accesses the JBrowse 1 (NCList) data stores. It does an "overlaps" query of the NCList data set and returns all genes and their children (transcripts, exons, etc) that overlap. The code in this module then filters the feature set to the gene and transcript specified in the props of the component.
+* BgzipIndexedFasta from "@gmod/indexedfasta" - This access the bgzipped, samtools faidx indexed fasta file. The locations of the .fai and .gzi files are found by just appending those extensions to the supplied fastaurl. 
+* SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel" - This component takes the feature data from NCList and the sequence data from BgzipIndexedFasta and generates the highlighted sequence that is controlled by the `mode` prop described above.
+
+#### Places for potential future additions
+
+This component does what I need it to do. Both NCList and BgzipIndexedFasta could be replaced with options to use other data accessing tools, like one for tabix-indexed GFF3 for feature data and twobit for reading .2bit sequence files.  Pull requests are accepted.
+
 ### Output
 
-<span style="background: rgb(250, 200, 200);">Up/downstream</span><br />
-<span style="background: rgb(200, 240, 240);">UTR</span><br />
-<span style="background: rgb(220, 220, 180);">Coding</span><br />
-Intron<br />
-<span style="background: rgb(200, 255, 200);">Genomic (i.e., unprocessed)</span><br />
-<span style="background: rgb(220, 160, 220);">Amino acid</span>
-
-
+![Screenshot of sample output showing a few dozen rows of fasta sequence with color highlighting](img/example_output.png)
 
 ## Acknowledgements
 
