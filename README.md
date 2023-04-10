@@ -60,6 +60,8 @@ Pull requests are accepted.
 
 ### Output
 
+In this screenshot, the actual output of this component is the fasta sequence only. The other elements (dropdown menues and the legend) were added in the page to make it more clear how it can be used.
+
 ![Screenshot of sample output showing a few dozen rows of fasta sequence with color highlighting](img/example_output.png)
 
 ## Acknowledgements
