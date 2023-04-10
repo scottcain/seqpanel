@@ -28,15 +28,15 @@ This React component creates a div containing highlighted FASTA DNA sequence. It
 Several items here a self explanatory: refseq, start, and end are location infomation. The props gene and transcript are the names of the features in the NClist data set.  The remaining items are described here:
 
 * mode - this is one of several keys that dictate what the output looks like. The options are:
- * genomic - The stretch of sequence from start to end with no special highlighting
- * genomic_sequence_updown - The strech of sequence from start to end with 500 base pairs of padding on both ends
- * cds - The coding sequence of the mRNA that is the result of in silico splicing
- * cdna - The CDS with UTRs added
- * protein - The amino acid sequence that results from the cds in silico transcription
- * gene - The genomic sequence from start to end with portions that are UTR and coding highlighted
- * gene_collapsed_intron - same as gene, but the introns are compressed to 10 base pairs at the splice junction and the remainer replaced with elipses
- * gene_updownstream - same as gene but with 500 bp of up and down stream sequence added 
- * gene_updownstream_collapsed_intron - same as gene_collapsed_intron but with up and downstream padding added
+   * genomic - The stretch of sequence from start to end with no special highlighting
+   * genomic_sequence_updown - The strech of sequence from start to end with 500 base pairs of padding on both ends
+   * cds - The coding sequence of the mRNA that is the result of in silico splicing
+   * cdna - The CDS with UTRs added
+   * protein - The amino acid sequence that results from the cds in silico transcription
+   * gene - The genomic sequence from start to end with portions that are UTR and coding highlighted
+   * gene_collapsed_intron - same as gene, but the introns are compressed to 10 base pairs at the splice junction and the remainer replaced with elipses
+   * gene_updownstream - same as gene but with 500 bp of up and down stream sequence added 
+   * gene_updownstream_collapsed_intron - same as gene_collapsed_intron but with up and downstream padding added
 * nclistbaseurl - the base url for the NClist adapter (basically, it's the part before "tracks" in the url)
 * urltemplate - the rest of the url that the NClis adapter uses. Typically, this will have `{refseq}` in it that will be interpolated with the refseq info
 * fastaurl - the url to the fasta file. The location of the .fai and .gzi files will be assumed from this url
