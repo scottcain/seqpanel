@@ -51,7 +51,7 @@ This component makes use of three components developed by the JBrowse team:
 
 #### Places for potential future additions
 
-This component does what I need it to do. Both NCList and BgzipIndexedFasta could be replaced with options to use other data accessing tools, like one for tabix-indexed GFF3 for feature data and twobit for reading .2bit sequence files.  Pull requests are accepted.
+This component does what I need it to do. Both NCList and BgzipIndexedFasta could be replaced with options to use other data accessing tools, like one for tabix-indexed GFF3 for feature data and twobit for reading .2bit sequence files.  It also assumes the "standard" genetic code. An option could be added to support others. Pull requests are accepted.
 
 ### Output
 
