@@ -45,7 +45,7 @@ Several items here a self explanatory: refseq, start, and end are location infom
 
 This component makes use of three components developed by the JBrowse team:
 
-* NCList from "@gmod/nclist" - This is what accesses the JBrowse 1 (NCList) data stores. It does an "overlaps" query of the NCList data set and returns all genes and their children (transcripts, exons, etc) that overlap. The code in this module then filters the feature set to the gene and transcript specified in the props of the component.
+* NCList from "@gmod/nclist" - This is what accesses the JBrowse 1 (NCList) data stores. It does an "overlaps" query of the NCList data set and returns all genes and their children (transcripts, exons, etc) that overlap. The code GenericSeqPanel then filters the feature set to the gene and transcript specified in the props of the component.
 * BgzipIndexedFasta from "@gmod/indexedfasta" - This access the bgzipped, samtools faidx indexed fasta file. The locations of the .fai and .gzi files are found by just appending those extensions to the supplied fastaurl. 
 * SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel" - This component takes the feature data from NCList and the sequence data from BgzipIndexedFasta and generates the highlighted sequence that is controlled by the `mode` prop described above.
 
