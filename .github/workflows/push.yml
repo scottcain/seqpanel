@@ -1,0 +1,18 @@
+name: Push
+
+on: push
+
+jobs:
+  test:
+    name: Lint, build, and test on node 18.x and ubuntu-latest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Install deps (with cache)
+        uses: bahmutov/npm-install@v1
+      - name: Test codebase
+        run: yarn test
