@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import GenericSeqPanel from "./GenericSeqPanel";
+import GenericSeqPanel from "./components/GenericSeqPanel";
 
 test("expect protein rendering", async () => {
   const { findByText } = render(

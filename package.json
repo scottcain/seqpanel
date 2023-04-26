@@ -1,8 +1,9 @@
 {
-  "name": "GenericSeqPanel",
+  "name": "generic-sequence-panel",
   "description": "read feature and sequence data and produce highlighted fasta",
   "license": "MIT",
   "repository": "scottcain/seqpanel",
+  "module": "esm/index.js",
   "version": "0.1.0",
   "author": {
     "name": "Scott Cain",
@@ -16,20 +17,23 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/node": "^18.15.11",
     "generic-filehandle": "^3.0.1",
     "mobx": "^6.8.0",
     "mobx-state-tree": "^5.1.8",
-    "react-scripts": "^4.0.2",
+    "npm-run-all": "^4.1.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-scripts": "^4.0.2",
     "rimraf": "^3.0.2",
     "rxjs": "^7.8.0",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "clean": "rimraf dist esm",
+    "build:esm": "tsc --target es2018 --outDir esm",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
