@@ -3,13 +3,19 @@
   "description": "read feature and sequence data and produce highlighted fasta",
   "license": "MIT",
   "repository": "scottcain/seqpanel",
-  "module": "esm/index.js",
+  "main": "dist/index.js",
+  "type": "module",
   "version": "0.1.0",
   "author": {
     "name": "Scott Cain",
     "email": "scott+npm@scottcain.net",
     "url": "https://github.com/scottcain"
   },
+  "files": [
+    "dist",
+    "bundle",
+    "src"
+  ],
   "devDependencies": {
     "@gmod/indexedfasta": "^2.0.4",
     "@gmod/nclist": "^0.2.2",
@@ -35,12 +41,14 @@
     "rollup": "^3.20.2",
     "rollup-plugin-polyfill-node": "^0.12.0",
     "rxjs": "^7.8.0",
+    "tslib": "^2.1.0",
     "typescript": "^5.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "yarn tsc && rollup -c",
-    "clean": "rimraf dist esm",
+    "prebuild": "npm run clean",
+    "build": "tsc && rollup -c",
+    "clean": "rimraf build dist esm",
     "build:esm": "tsc --target es2018 --outDir esm",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
