@@ -46,10 +46,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "prebuild": "npm run clean",
-    "build": "tsc && rollup -c",
-    "clean": "rimraf build dist esm",
-    "build:esm": "tsc --target es2018 --outDir esm",
+    "build": "tsc  && rollup -c",
+    "clean": "rimraf build dist bundle",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
