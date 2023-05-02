@@ -42,6 +42,10 @@
   "scripts": {
     "build:esm": "tsc --target es2018 --outDir esm",
     "build:es5": "tsc --target es2015 --module commonjs --outDir dist",
-    "build": "npm run build:esm && npm run build:es5"
+    "build": "npm run build:esm && npm run build:es5",
+    "clean": "rimraf esm dist",
+    "prebuild": "npm run clean",
+    "preversion": "npm run build",
+    "postversion": "git push --follow-tags"
   }
 }
