@@ -4,8 +4,8 @@
   "license": "MIT",
   "repository": "scottcain/seqpanel",
   "main": "dist/index.js",
-  "type": "module",
-  "version": "0.1.0",
+  "module": "esm/index.js",
+  "version": "1.0.0",
   "author": {
     "name": "Scott Cain",
     "email": "scott+npm@scottcain.net",
@@ -13,7 +13,7 @@
   },
   "files": [
     "dist",
-    "bundle",
+    "esm",
     "src"
   ],
   "peerDependencies": {
@@ -21,9 +21,9 @@
     "react-dom": "^17.0.1"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.5.1",
     "@types/node": "^18.15.11",
     "rimraf": "^5.0.0",
@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@gmod/indexedfasta": "^2.0.4",
-    "@gmod/nclist": "^0.2.2",
+    "@gmod/nclist": "^1.0.0",
     "@jbrowse/core": "^2.4.1",
     "generic-filehandle": "^3.0.1",
     "mobx": "^6.8.0",
@@ -40,20 +40,8 @@
     "tslib": "^2.1.0"
   },
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc --watch"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "homepage": "."
+    "build:esm": "tsc --target es2018 --outDir esm",
+    "build:es5": "tsc --target es2015 --module commonjs --outDir dist",
+    "build": "npm run build:esm && npm run build:es5"
+  }
 }

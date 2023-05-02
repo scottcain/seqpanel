@@ -71,7 +71,7 @@ async function accessFasta(
   refseq: string,
   start: number,
   end: number,
-  fastaURL: string
+  fastaURL: string,
 ) {
   const fastaFilehandle = new RemoteFile(fastaURL);
   const faiFilehandle = new RemoteFile(fastaURL + ".fai");
