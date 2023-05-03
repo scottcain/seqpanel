@@ -1,9 +1,7 @@
-import { render } from "@testing-library/react";
-import { describe, test } from '@jest/globals';
-import GenericSeqPanel from "./components/GenericSeqPanel";
+import { GenericSeqPanel } from "generic-sequence-panel";
 
-test("expect protein rendering", async () => {
-  const { findByText } = render(
+function App() {
+  return (
     <GenericSeqPanel
       refseq="X"
       start={13201770}
@@ -16,5 +14,6 @@ test("expect protein rendering", async () => {
       fastaurl="https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS284.genomic.fa.gz"
     />
   );
-  await findByText(/R12H7.1a.2-protein/, {}, { timeout: 15000 });
-}, 20000);
+}
+
+export default App;

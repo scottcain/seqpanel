@@ -1,9 +1,10 @@
 import React from "react";
-import ReactDOM from "react-dom";
+
+import { render } from "@testing-library/react";
 import GenericSeqPanel from "./components/GenericSeqPanel";
 
-ReactDOM.render(
-  <React.StrictMode>
+test("expect protein rendering", async () => {
+  const { findByText } = render(
     <GenericSeqPanel
       refseq="X"
       start={13201770}
@@ -14,7 +15,7 @@ ReactDOM.render(
       nclistbaseurl="https://s3.amazonaws.com/agrjbrowse/MOD-jbrowses/WormBase/WS287/c_elegans_PRJNA13758/"
       urltemplate="tracks/Curated_Genes/{refseq}/trackData.jsonz"
       fastaurl="https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS284.genomic.fa.gz"
-    />
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+    />,
+  );
+  await findByText(/R12H7.1a.2-protein/, {}, { timeout: 15000 });
+}, 20000);
