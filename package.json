@@ -1,43 +1,17 @@
 {
-  "name": "crav4",
-  "version": "0.1.0",
+  "name": "root",
   "private": true,
-  "dependencies": {
-    "@gmod/indexedfasta": "^2.0.4",
-    "@gmod/nclist": "^0.2.2",
-    "@jbrowse/core": "^2.4.1",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "generic-filehandle": "^3.0.1",
-    "mobx": "^6.8.0",
-    "mobx-state-tree": "^5.1.8",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "^4.0.2",
-    "rxjs": "^7.8.0",
-    "typescript": "^5.0.2"
-  },
+  "workspaces": [
+    "lib",
+    "app"
+  ],
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "jest"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "homepage": "."
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.4"
+  }
 }

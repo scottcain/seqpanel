@@ -1,0 +1,51 @@
+{
+  "name": "@gmod/generic-sequence-panel",
+  "description": "read feature and sequence data and produce highlighted fasta",
+  "license": "MIT",
+  "repository": "scottcain/seqpanel",
+  "main": "dist/index.js",
+  "module": "esm/index.js",
+  "version": "1.0.0",
+  "author": {
+    "name": "Scott Cain",
+    "email": "scott+npm@scottcain.net",
+    "url": "https://github.com/scottcain"
+  },
+  "files": [
+    "dist",
+    "esm",
+    "src"
+  ],
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/jest": "^29.5.1",
+    "@types/node": "^18.15.11",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@gmod/indexedfasta": "^2.0.4",
+    "@gmod/nclist": "^1.0.0",
+    "@jbrowse/core": "^2.4.1",
+    "generic-filehandle": "^3.0.1",
+    "mobx": "^6.8.0",
+    "mobx-state-tree": "^5.1.8",
+    "rxjs": "^7.8.0",
+    "tslib": "^2.1.0"
+  },
+  "scripts": {
+    "build:esm": "tsc --target es2018 --outDir esm",
+    "build:es5": "tsc --target es2015 --module commonjs --outDir dist",
+    "build": "npm run build:esm && npm run build:es5",
+    "clean": "rimraf esm dist",
+    "prebuild": "npm run clean",
+    "preversion": "npm run build",
+    "postversion": "git push --follow-tags"
+  }
+}
