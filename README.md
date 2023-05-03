@@ -1,6 +1,6 @@
 ## Install
 
-     $ npm install --save @gmod/generic-sequence-panel
+     $ npm install --save generic-sequence-panel
 
 ## Usage
 
