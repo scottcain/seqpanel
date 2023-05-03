@@ -1,4 +1,4 @@
-import { GenericSeqPanel } from "generic-sequence-panel";
+import { GenericSeqPanel } from "@gmod/generic-sequence-panel";
 
 function App() {
   return (
