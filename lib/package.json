@@ -1,5 +1,5 @@
 {
-  "name": "generic-sequence-panel",
+  "name": "@gmod/generic-sequence-panel",
   "description": "read feature and sequence data and produce highlighted fasta",
   "license": "MIT",
   "repository": "scottcain/seqpanel",
