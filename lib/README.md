@@ -6,7 +6,7 @@
 
 This React component creates a div containing highlighted FASTA DNA sequence. It
 uses as its input materials an NCList (i.e., a JBrowse 1 GFF3 formated dataset)
-anda bgzip, faidx indexed FASTA file. It addition to those data sources, the
+and a bgzip, faidx indexed FASTA file. It addition to those data sources, the
 component must also be supplied these items about the location:
 
 - the name of the reference sequence (eg, "Chr1")
