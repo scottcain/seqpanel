@@ -100,6 +100,11 @@ to make it more clear how it can be used.
 
 ![Screenshot of sample output showing a few dozen rows of fasta sequence with color highlighting](img/example_output.png)
 
+###
+
+A simple example implemenation (from the app directory in this monorepo) is running at
+https://scottcain.github.io/seqpanel/
+
 ## Acknowledgements
 
 I would very much like to thank [Colin Diesh](https://github.com/cmdcolin), who
