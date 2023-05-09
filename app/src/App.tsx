@@ -8,9 +8,6 @@ type UpdateSeqProps = {
 
 const UpdateSeq: FC<UpdateSeqProps> = ( {trans, mod } ): ReactElement => { 
     useEffect(() => {
-        console.log("useEffect");
-	console.log(trans);
-	console.log(mod);
     }, [trans, mod]);
 
     return (
