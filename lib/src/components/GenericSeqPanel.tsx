@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useState, useEffect } from "react";
 import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
-import assembleBundle from "../seqpanel-api";
+import { assembleBundle } from "../assembleBundle";
 import { Feature } from "@jbrowse/core/util";
 
 type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
@@ -41,7 +41,6 @@ export default function GenericSeqPanel({
           transcript,
           refseq,
         });
-        console.log({ res });
         setResult(res);
       } catch (e) {
         console.error(e);

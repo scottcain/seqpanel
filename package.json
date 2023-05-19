@@ -10,6 +10,7 @@
     "lint": "eslint lib app"
   },
   "devDependencies": {
+    "@types/node-fetch": "^2.6.4",
     "@typescript-eslint/eslint-plugin": "^5.59.6",
     "@typescript-eslint/parser": "^5.59.6",
     "eslint": "^8.41.0",
@@ -17,6 +18,7 @@
     "eslint-plugin-unicorn": "^47.0.0",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
+    "node-fetch": "^2.0.0",
     "ts-jest": "^29.1.0",
     "typescript": "^5.0.4"
   }
