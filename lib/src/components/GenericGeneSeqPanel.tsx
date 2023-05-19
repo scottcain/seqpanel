@@ -1,6 +1,6 @@
 import React, { FC, ReactElement, useState, useEffect } from "react";
 import GenericSeqPanel from "./GenericSeqPanel";
-import transcriptList from "../genepanel-api.ts";
+import transcriptList from "../genepanel-api";
 
 type UpdateSeqProps = {
   props: {

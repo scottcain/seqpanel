@@ -132,7 +132,7 @@ async function accessStore(props: {
   })) {
     // keep only the transcript we're looking for
     if (feature.get("name") === gene) {
-      console.log(feature);
+
       return feature
         .get("subfeatures")
         .find((value: Feature) => value.get("name") === transcript);
