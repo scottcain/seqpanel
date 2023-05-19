@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
+import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/SequencePanel";
 import assembleBundle from "../seqpanel-api";
 
 /*
@@ -21,9 +21,9 @@ import assembleBundle from "../seqpanel-api";
  *
  *
  */
-// Create a new component that renders a div
-// and calls the API to get the sequence
-// and then renders the sequence
+
+// Create a new component that renders a div and calls the API to get the
+// sequence and then renders the sequence
 
 function GenericSeqPanel(props: {
   nclistbaseurl: string;
