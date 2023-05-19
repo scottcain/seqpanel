@@ -53,7 +53,6 @@ async function assembleBundle(props: {
     intronBp: 10,
   };
 }
-export default assembleBundle;
 
 // Create accessFasta function
 // this function is called by the assembleBundle function
@@ -133,9 +132,12 @@ async function accessStore(props: {
   })) {
     // keep only the transcript we're looking for
     if (feature.get("name") === gene) {
+      console.log(feature);
       return feature
         .get("subfeatures")
         .find((value: Feature) => value.get("name") === transcript);
     }
   }
 }
+
+export default assembleBundle;
