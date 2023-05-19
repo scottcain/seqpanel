@@ -1,51 +1,27 @@
 import { RemoteFile } from "generic-filehandle";
-import NCList from "@gmod/nclist";
 import { BgzipIndexedFasta } from "@gmod/indexedfasta";
-import { Feature } from "@jbrowse/core/util/simpleFeature";
 
 // locals
 import NCListFeature from "./NCListFeature";
-
-// create functions that fetch annotations from the server
-// and return them in a format that can be used by the
-// SeqPanel object
-
-// this function is called by the SeqPanel component
-// when it needs to fetch annotations and sequence for a given range
-// it should return an object consisting of the following properties:
-// feature: a feature object
-// sequence: a sequence object (that has sequence for the range plus
-// 	  some extra sequence on either side)
-// 	  (see @gmod/indexedfasta for more info)
-// 	  (see @gmod/nclist for more info)
-// mode: a string that is one of:
-//    genomic
-//    genomic_sequence_updown
-//    cds
-//    cdna
-//    protein
-//    gene
-//    gene_collapsed_intron
-//    gene_updownstream
-//    gene_updownstream_collapsed_intron
-//    (though this will probably be overridden by the SeqPanel component)
-// intronBp: the number of base pairs to show for truncated introns
+import { Feature } from "@jbrowse/core/util";
 
 async function assembleBundle(props: {
   nclistbaseurl: string;
   urltemplate: string;
   fastaurl: string;
   refseq: string;
-  start: number;
-  end: number;
   gene: string;
-  transcript: string;
+  transcript: Feature;
 }) {
-  const { fastaurl, refseq } = props;
-  const feature = await accessStore(props);
-  const sequence = await accessFasta(refseq, feature[1], feature[2], fastaurl);
+  const { fastaurl, transcript, refseq } = props;
+  const sequence = await accessFasta(
+    refseq,
+    transcript.get("start"),
+    transcript.get("end"),
+    fastaurl,
+  );
 
-  const f = new NCListFeature(feature);
+  const f = new NCListFeature(transcript);
   return {
     feature: f.toJSON(),
     sequence,
@@ -54,17 +30,15 @@ async function assembleBundle(props: {
   };
 }
 
-// Create accessFasta function
-// this function is called by the assembleBundle function
+// Create accessFasta function this function is called by the assembleBundle
+// function
 // It is called with four arguments:
-// refseq: the reference sequence (name, like "chr1")
-// start: the start of the range (in interbase coordinates)
-// end: the end of the range (in interbase coordinates)
-// fastaURL: the URL of the fasta file
-// it should return a sequence object consisting of:
-// seq: the sequence for the range
-// upstream: the sequence upstream of the range
-// downstream: the sequence downstream of the range
+//
+// - refseq: the reference sequence (name, like "chr1")
+// - start: the start of the range (in interbase coordinates)
+// - end: the end of the range (in interbase coordinates)
+// - fastaURL: the URL of the fasta file
+// @return {seq:string,upstream:string,downstream:string}
 
 async function accessFasta(
   refseq: string,
@@ -72,6 +46,7 @@ async function accessFasta(
   end: number,
   fastaURL: string,
 ) {
+  console.log({ start, end, refseq });
   const fastaFilehandle = new RemoteFile(fastaURL);
   const faiFilehandle = new RemoteFile(fastaURL + ".fai");
   const gziFilehandle = new RemoteFile(fastaURL + ".gzi");
@@ -94,50 +69,6 @@ async function accessFasta(
     upstream: upstream || "",
     downstream: downstream || "",
   };
-}
-
-// Create accessStore function
-// this function is called by the assembleBundle function
-// It is called with seven arguments:
-// nclistbaseurl: the base URL of the NCList file
-// urltemplate: the URL template for the NCList file
-// refseq: the reference sequence (name, like "chr1")
-// start: the start of the range (in interbase coordinates)
-// end: the end of the range (in interbase coordinates)
-// gene: the name of the gene
-// transcript: the name of the transcript
-// it should return a single transcript feature object
-
-async function accessStore(props: {
-  nclistbaseurl: string;
-  urltemplate: string;
-  refseq: string;
-  start: number;
-  end: number;
-  gene: string;
-  transcript: string;
-}) {
-  const { nclistbaseurl, urltemplate, refseq, start, end, gene, transcript } =
-    props;
-  const store = new NCList({
-    urlTemplate: urltemplate,
-    baseUrl: nclistbaseurl,
-    readFile: (url: string) => new RemoteFile(url).readFile(),
-  });
-
-  for await (const feature of store.getFeatures({
-    refName: refseq,
-    start: start,
-    end: end,
-  })) {
-    // keep only the transcript we're looking for
-    if (feature.get("name") === gene) {
-
-      return feature
-        .get("subfeatures")
-        .find((value: Feature) => value.get("name") === transcript);
-    }
-  }
 }
 
 export default assembleBundle;
