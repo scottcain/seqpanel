@@ -1,41 +1,10 @@
-import React, { FC, ReactElement, useState, useEffect } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React, { useState, useEffect } from "react";
 import GenericSeqPanel from "./GenericSeqPanel";
-import transcriptList from "../genepanel-api";
+import transcriptList from "../fetchTranscripts";
+import { Feature } from "@jbrowse/core/util";
 
-type UpdateSeqProps = {
-  props: {
-    nclistbaseurl: string,
-    fastaurl: string,
-    refseq: string,
-    start: number,
-    end: number,
-    gene: string,
-    urltemplate: string
-    },
-  trans: string,
-  mod: string,
-}
-
-const UpdateSeq: FC<UpdateSeqProps> = ( {props, trans, mod } ): ReactElement => {
-    useEffect(() => {
-    }, [trans, mod]);
-
-    return (
-    <GenericSeqPanel
-      refseq={props.refseq}
-      start={props.start}
-      end={props.end}
-      gene={props.gene}
-      transcript={trans}
-      mode={mod}
-      nclistbaseurl={props.nclistbaseurl}
-      urltemplate={props.urltemplate}
-      fastaurl={props.fastaurl}
-    />
-    );
-}
-
-function GenericGeneSeqPanel(props: {
+export default function GenericGeneSeqPanel(props: {
   nclistbaseurl: string;
   fastaurl: string;
   refseq: string;
@@ -44,51 +13,77 @@ function GenericGeneSeqPanel(props: {
   gene: string;
   urltemplate: string;
 }) {
-
-  const [result, setResult] = useState(); //the result should be a list of transcript names
+  const { nclistbaseurl, fastaurl, refseq, start, end, gene, urltemplate } =
+    props;
+  const [result, setResult] = useState<Feature[]>();
   const [error, setError] = useState<unknown>();
-
+  const [transcript, setTranscript] = useState<Feature>();
+  const [mode, setMode] = useState("gene");
+  const feature = transcript || result?.[0];
   useEffect(() => {
     (async () => {
       try {
-        setResult(await transcriptList(props));
+        const res = await transcriptList({
+          nclistbaseurl,
+          fastaurl,
+          refseq,
+          start,
+          end,
+          gene,
+          urltemplate,
+        });
+        setResult(res);
       } catch (e) {
+        console.error(e);
         setError(e);
       }
     })();
-  }, [props]);
+  }, [nclistbaseurl, fastaurl, refseq, start, end, gene, urltemplate]);
+
   if (error) {
     return <div style={{ color: "red" }}>{`${error}`}</div>;
   } else if (!result) {
     return <div>Loading...</div>;
   } else {
-    
-    const [valueTranscript, setValueTranscript] = useState('');
-    const [valueMode,       setValueMode]       = useState("gene");
-
     return (
       <div className="GenericGeneSeqPanel">
-        Transcript:<select onChange={(e) => {setValueTranscript(e.target.value)}}>
-           
-	     console.log(result)
-	  
-	</select>
-        Mode:<select onChange={(e) => {setValueMode(e.target.value)}}>
+        Transcript:
+        <select
+          onChange={e =>
+            setTranscript(result.find(r => r.id() === e.target.value))
+          }
+        >
+          {result.map(r => (
+            <option key={r.id()} value={r.id()}>
+              {r.get("name")}
+            </option>
+          ))}
+        </select>
+        Mode:
+        <select onChange={e => setMode(e.target.value)}>
           <option value="gene">gene</option>
           <option value="cds">CDS</option>
           <option value="cdna">cDNA</option>
           <option value="protein">protein</option>
           <option value="genomic">genomic</option>
-          <option value="genomic_sequence_updown">genomic +500bp up and down stream</option>
-          <option value="gene_collapsed_intron">gene with colapsed introns</option>
-          <option value="gene_updownstream">gene with 500bp up and down stream</option>
-          <option value="gene_updownstream_collapsed_intron">gene with 500bp up and down stream and colapsed introns</option>
+          <option value="genomic_sequence_updown">
+            genomic +500bp up and down stream
+          </option>
+          <option value="gene_collapsed_intron">
+            gene with colapsed introns
+          </option>
+          <option value="gene_updownstream">
+            gene with 500bp up and down stream
+          </option>
+          <option value="gene_updownstream_collapsed_intron">
+            gene with 500bp up and down stream and colapsed introns
+          </option>
         </select>
-      <br />
-        <UpdateSeq props={props} trans={valueTranscript} mod={valueMode} />
+        <br />
+        {feature ? (
+          <GenericSeqPanel {...props} transcript={feature} mode={mode} />
+        ) : null}
       </div>
     );
   }
 }
-
-export default GenericGeneSeqPanel;
