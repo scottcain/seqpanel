@@ -2,9 +2,15 @@
 
      $ npm install --save generic-sequence-panel
 
-## Usage
+## About
 
-This React component creates a div containing highlighted FASTA DNA sequence. It
+This package provides two React components: GenericSeqPanel and GenericGeneSeqPanel which
+have similar arguments.  The difference between these two panels is this: GenericSeqPanel
+provides ONLY the highlighted FASTA given a gene, transcript and mode. GenericGeneSeqPanel 
+does a little more: you provide a gene and it gets a list of transcripts of that gene and
+provides a dropdown menu for both the transcript and the mode.
+
+The React components create a div containing highlighted FASTA DNA sequence. It
 uses as its input materials an NCList (i.e., a JBrowse 1 GFF3 formated dataset)
 and a bgzip, faidx indexed FASTA file. It addition to those data sources, the
 component must also be supplied these items about the location:
@@ -13,7 +19,7 @@ component must also be supplied these items about the location:
 - the start and end coordinates (technically in interbase coordinates, but since
   the lookup is going to be an overlaps-type query, the details don't really
   matter if base versus interbase coordinates are used)
-- the name of the gene and transcript for which the highlighted fasta is
+- the name of the gene and transcript (only need for GenericSeqPanel) for which the highlighted fasta is
   required
 - the "mode" of highlighting required (more on that below)
 
@@ -26,6 +32,18 @@ component must also be supplied these items about the location:
       gene="WBGene00006749"
       transcript="R12H7.1a.2"
       mode="protein"
+      nclistbaseurl="https://s3.amazonaws.com/agrjbrowse/MOD-jbrowses/WormBase/WS287/c_elegans_PRJNA13758/"
+      urltemplate="tracks/Curated_Genes/{refseq}/trackData.jsonz"
+      fastaurl="https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS284.genomic.fa.gz"
+    />
+    
+and
+
+    <GenericSeqPanel
+      refseq="X"
+      start={13201770}
+      end={13216729}
+      gene="WBGene00006749"
       nclistbaseurl="https://s3.amazonaws.com/agrjbrowse/MOD-jbrowses/WormBase/WS287/c_elegans_PRJNA13758/"
       urltemplate="tracks/Curated_Genes/{refseq}/trackData.jsonz"
       fastaurl="https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS284.genomic.fa.gz"
@@ -94,9 +112,10 @@ Pull requests are accepted.
 
 ### Output
 
-In this screenshot, the actual output of this component is the fasta sequence
+In this screenshot, the actual output of the GenericSeqPanel component is the fasta sequence
 only. The other elements (dropdown menues and the legend) were added in the page
-to make it more clear how it can be used.
+to make it more clear how it can be used, and in fact look similar to what you 
+can expect from GenericGeneSeqPanel.
 
 ![Screenshot of sample output showing a few dozen rows of fasta sequence with color highlighting](img/example_output.png)
 
