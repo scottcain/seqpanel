@@ -5,8 +5,8 @@
   "repository": "scottcain/seqpanel",
   "main": "dist/index.js",
   "module": "esm/index.js",
-  "version": "1.0.2",
-  "keywords" : [
+  "version": "1.1.0",
+  "keywords": [
     "bioinformatics",
     "gene page",
     "FASTA",
@@ -40,7 +40,7 @@
   "dependencies": {
     "@gmod/indexedfasta": "^2.0.4",
     "@gmod/nclist": "^1.0.0",
-    "@jbrowse/core": "^2.4.1",
+    "@jbrowse/core": "2.4.2",
     "generic-filehandle": "^3.0.1",
     "mobx": "^6.8.0",
     "mobx-state-tree": "^5.1.8",

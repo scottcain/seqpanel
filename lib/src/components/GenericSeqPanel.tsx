@@ -1,31 +1,22 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useState, useEffect } from "react";
 import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
-import assembleBundle from "../seqpanel-api";
+import { assembleBundle } from "../assembleBundle";
+import { Feature } from "@jbrowse/core/util";
 
-/*
- * Example implementation looks like
- *
- *  root.render(
-        <GenericSeqPanel
-          refseq="X"
-          start="13201770"
-          end="13216729"
-          gene="WBGene00006749"
-          transcript="R12H7.1a.2"
-          mode="protein"
-          nclistbaseurl="https://s3.amazonaws.com/agrjbrowse/MOD-jbrowses/WormBase/WS287/c_elegans_PRJNA13758/"
-          urltemplate="tracks/Curated_Genes/{refseq}/trackData.jsonz"
-          fastaurl="https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS284.genomic.fa.gz"
-        />
-    )
- *
- *
- */
-// Create a new component that renders a div
-// and calls the API to get the sequence
-// and then renders the sequence
+type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
 
-function GenericSeqPanel(props: {
+export default function GenericSeqPanel({
+  nclistbaseurl,
+  fastaurl,
+  refseq,
+  mode,
+  start,
+  end,
+  gene,
+  transcript,
+  urltemplate,
+}: {
   nclistbaseurl: string;
   fastaurl: string;
   refseq: string;
@@ -33,23 +24,40 @@ function GenericSeqPanel(props: {
   start: number;
   end: number;
   gene: string;
-  transcript: string;
+  transcript: Feature;
   urltemplate: string;
 }) {
-  type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
-
   const [result, setResult] = useState<Bundle>();
   const [error, setError] = useState<unknown>();
 
   useEffect(() => {
     (async () => {
       try {
-        setResult(await assembleBundle(props));
+        const res = await assembleBundle({
+          nclistbaseurl,
+          urltemplate,
+          fastaurl,
+          gene,
+          transcript,
+          refseq,
+        });
+        setResult(res);
       } catch (e) {
+        console.error(e);
         setError(e);
       }
     })();
-  }, [props]);
+  }, [
+    refseq,
+    transcript,
+    gene,
+    start,
+    end,
+    fastaurl,
+    urltemplate,
+    nclistbaseurl,
+  ]);
+
   if (error) {
     return <div style={{ color: "red" }}>{`${error}`}</div>;
   } else if (!result) {
@@ -58,7 +66,7 @@ function GenericSeqPanel(props: {
     return (
       <div className="GenericSeqPanel">
         <SequencePanel
-          mode={props.mode}
+          mode={mode}
           sequence={result.sequence}
           feature={result.feature as any}
         />
@@ -66,5 +74,3 @@ function GenericSeqPanel(props: {
     );
   }
 }
-
-export default GenericSeqPanel;
