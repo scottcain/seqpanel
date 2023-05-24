@@ -117,7 +117,7 @@ only. The other elements (dropdown menues and the legend) were added in the page
 to make it more clear how it can be used, and in fact look similar to what you 
 can expect from GenericGeneSeqPanel.
 
-![Screenshot of sample output showing a few dozen rows of fasta sequence with color highlighting](img/example_output.png)
+![Screenshot of sample output showing a few dozen rows of fasta sequence with color highlighting](/img/example_output.png)
 
 ###
 
