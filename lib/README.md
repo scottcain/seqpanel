@@ -39,7 +39,7 @@ component must also be supplied these items about the location:
     
 and
 
-    <GenericSeqPanel
+    <GenericGeneSeqPanel
       refseq="X"
       start={13201770}
       end={13216729}
