@@ -21,7 +21,7 @@ component must also be supplied these items about the location:
   matter if base versus interbase coordinates are used)
 - the name of the gene and transcript (only need for GenericSeqPanel) for which the highlighted fasta is
   required
-- the "mode" of highlighting required (more on that below)
+- the "mode" of highlighting required (more on that below, and also only required by GenericSeqPanel)
 
 ### More usage details
 
