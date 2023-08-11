@@ -17,6 +17,6 @@ jobs:
       - name: Test codebase
         run: yarn test
       - name: Lint codebase
-        run: yarn Lint
+        run: yarn lint 
       - name: Typecheck codebase
         run: yarn tsc
