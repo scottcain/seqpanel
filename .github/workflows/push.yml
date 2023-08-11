@@ -18,5 +18,9 @@ jobs:
         run: yarn test
       - name: Lint codebase
         run: yarn lint 
-      - name: Typecheck codebase
-        run: yarn tsc
+      - name: Build lib
+        working-directory: lib
+        run: yarn build
+      - name: Build app
+        working-directory: app
+        run: yarn build
