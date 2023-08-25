@@ -70,13 +70,13 @@ export default function GenericGeneSeqPanel(props: {
             genomic +500bp up and down stream
           </option>
           <option value="gene_collapsed_intron">
-            gene with colapsed introns
+            gene with collapsed introns
           </option>
           <option value="gene_updownstream">
             gene with 500bp up and down stream
           </option>
           <option value="gene_updownstream_collapsed_intron">
-            gene with 500bp up and down stream and colapsed introns
+            gene with 500bp up and down stream and collapsed introns
           </option>
         </select>
         <br />
