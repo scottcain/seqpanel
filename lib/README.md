@@ -11,7 +11,7 @@ does a little more: you provide a gene and it gets a list of transcripts of that
 provides a dropdown menu for both the transcript and the mode.
 
 The React components create a div containing highlighted FASTA DNA sequence. It
-uses as its input materials an NCList (i.e., a JBrowse 1 GFF3 formated dataset)
+uses as its input materials an NCList (i.e., a JBrowse 1 GFF3 formatted dataset)
 and a bgzip, faidx indexed FASTA file. It addition to those data sources, the
 component must also be supplied these items about the location:
 
@@ -50,14 +50,14 @@ and
     />
 
 Several items here a self explanatory: refseq, start, and end are location
-infomation. The props gene and transcript are the names of the features in the
+information. The props gene and transcript are the names of the features in the
 NClist data set. The remaining items are described here:
 
 - mode - this is one of several keys that dictate what the output looks like.
   The options are:
   - genomic - The stretch of sequence from start to end with no special
     highlighting
-  - genomic_sequence_updown - The strech of sequence from start to end with 500
+  - genomic_sequence_updown - The stretch of sequence from start to end with 500
     base pairs of padding on both ends
   - cds - The coding sequence of the mRNA that is the result of in silico
     splicing
@@ -67,7 +67,7 @@ NClist data set. The remaining items are described here:
   - gene - The genomic sequence from start to end with portions that are UTR and
     coding highlighted
   - gene_collapsed_intron - same as gene, but the introns are compressed to 10
-    base pairs at the splice junction and the remainer replaced with elipses
+    base pairs at the splice junction and the remainder replaced with ellipses 
   - gene_updownstream - same as gene but with 500 bp of up and down stream
     sequence added
   - gene_updownstream_collapsed_intron - same as gene_collapsed_intron but with
@@ -113,7 +113,7 @@ Pull requests are accepted.
 ### Output
 
 In this screenshot, the actual output of the GenericSeqPanel component is the fasta sequence
-only. The other elements (dropdown menues and the legend) were added in the page
+only. The other elements (dropdown menus and the legend) were added in the page
 to make it more clear how it can be used, and in fact look similar to what you 
 can expect from GenericGeneSeqPanel.
 
@@ -121,7 +121,7 @@ can expect from GenericGeneSeqPanel.
 
 ###
 
-A simple example implemenation (from the app directory in this monorepo) is running at
+A simple example implementation (from the app directory in this monorepo) is running at
 https://scottcain.github.io/seqpanel/
 
 ## Acknowledgements
