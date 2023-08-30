@@ -34,6 +34,8 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.5.1",
     "@types/node": "^18.15.11",
+    "copy-to-clipboard": "^3.3.3",
+    "reactstrap": "^9.2.0",
     "rimraf": "^5.0.0",
     "typescript": "^5.0.4"
   },

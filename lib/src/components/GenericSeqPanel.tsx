@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
 import { assembleBundle } from "../assembleBundle";
 import { Feature } from "@jbrowse/core/util";
+import copy from 'copy-to-clipboard'
+import { Button } from 'reactstrap';
 
 type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
 
@@ -42,6 +44,7 @@ export default function GenericSeqPanel({
           refseq,
         });
         setResult(res);
+//	console.log(res.sequence.seq);
       } catch (e) {
         console.error(e);
         setError(e);
@@ -64,6 +67,7 @@ export default function GenericSeqPanel({
     return <div>Loading...</div>;
   } else {
     return (
+     <>
       <div className="GenericSeqPanel">
         <SequencePanel
           mode={mode}
@@ -71,6 +75,16 @@ export default function GenericSeqPanel({
           feature={result.feature as any}
         />
       </div>
+        <ul>
+          <li><span style={{ background: 'rgb(250, 200, 200)' }}>Up/downstream</span></li>
+          <li><span style={{ background: 'rgb(200, 240, 240)' }}>UTR</span></li>
+          <li><span style={{ background: 'rgb(220, 220, 180)' }}>Coding</span></li>
+          <li>Intron</li>
+          <li><span style={{ background: 'rgb(200, 255, 200)' }}>Genomic (i.e., unprocessed)</span></li>
+          <li><span style={{ background: 'rgb(220, 160, 220)' }}>Amino acid</span></li>
+        </ul>
+        <p>Note that lowercase bases generally indicate masked sequence.</p>
+     </>
     );
   }
 }
