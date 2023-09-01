@@ -1,10 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
 import { assembleBundle } from "../assembleBundle";
 import { Feature } from "@jbrowse/core/util";
-//import copy from 'copy-to-clipboard'
-//import { Button } from 'reactstrap';
+import copy from 'copy-to-clipboard'
+import { Button } from 'reactstrap';
 
 type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
 
@@ -31,6 +31,9 @@ export default function GenericSeqPanel({
 }) {
   const [result, setResult] = useState<Bundle>();
   const [error, setError] = useState<unknown>();
+  const seqPanelRef = useRef<HTMLDivElement>(null);
+  const [copied, setCopied] = useState(false)
+  const [copiedHtml, setCopiedHtml] = useState(false)
 
   useEffect(() => {
     (async () => {
@@ -68,9 +71,37 @@ export default function GenericSeqPanel({
   } else {
     return (
      <>
+     <Button
+          variant="contained"
+          onClick={() => {
+            const ref = seqPanelRef.current
+            if (ref) {
+              copy(ref.textContent || '', { format: 'text/plain' })
+              setCopied(true)
+              setTimeout(() => setCopied(false), 1000)
+            }
+          }}
+        >
+          {copied ? 'Copied to clipboard!' : 'Copy plaintext'}
+        </Button>
+        <Button
+            variant="contained"
+            onClick={() => {
+              const ref = seqPanelRef.current
+              if (!ref) {
+                return
+              }
+              copy(ref.innerHTML, { format: 'text/html' })
+              setCopiedHtml(true)
+              setTimeout(() => setCopiedHtml(false), 1000)
+            }}
+          >
+            {copiedHtml ? 'Copied to clipboard!' : 'Copy HTML'}
+        </Button>
      <div style={ { display: 'flex' } }>
       <div className="p-2">
         <SequencePanel
+          ref={seqPanelRef}
           mode={mode}
           sequence={result.sequence}
           feature={result.feature as any}
