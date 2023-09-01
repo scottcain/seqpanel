@@ -68,13 +68,16 @@ export default function GenericSeqPanel({
   } else {
     return (
      <>
-      <div className="GenericSeqPanel">
+     <div style={ { display: 'flex' } }>
+      <div className="p-2">
         <SequencePanel
           mode={mode}
           sequence={result.sequence}
           feature={result.feature as any}
         />
       </div>
+      <div className="p-2">
+        <p>Legend:</p>
         <ul>
           <li><span style={{ background: 'rgb(250, 200, 200)' }}>Up/downstream</span></li>
           <li><span style={{ background: 'rgb(200, 240, 240)' }}>UTR</span></li>
@@ -83,7 +86,9 @@ export default function GenericSeqPanel({
           <li><span style={{ background: 'rgb(200, 255, 200)' }}>Genomic (i.e., unprocessed)</span></li>
           <li><span style={{ background: 'rgb(220, 160, 220)' }}>Amino acid</span></li>
         </ul>
-        <p>Note that lowercase bases generally indicate masked sequence.</p>
+        <p style={{ fontSize: "small" }}>Note that lowercase bases generally indicate masked sequence.</p>
+      </div>
+     </div>
      </>
     );
   }
