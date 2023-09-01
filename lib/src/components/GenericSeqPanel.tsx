@@ -4,7 +4,7 @@ import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
 import { assembleBundle } from "../assembleBundle";
 import { Feature } from "@jbrowse/core/util";
 import copy from 'copy-to-clipboard'
-import { Button } from 'reactstrap';
+import { Button, Tooltip } from 'reactstrap';
 
 type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
 
@@ -34,6 +34,7 @@ export default function GenericSeqPanel({
   const seqPanelRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false)
   const [copiedHtml, setCopiedHtml] = useState(false)
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -85,6 +86,7 @@ export default function GenericSeqPanel({
           {copied ? 'Copied to clipboard!' : 'Copy plaintext'}
         </Button>
         <Button
+            id="CopyHighlightedButton"
             variant="contained"
             onClick={() => {
               const ref = seqPanelRef.current
@@ -96,8 +98,15 @@ export default function GenericSeqPanel({
               setTimeout(() => setCopiedHtml(false), 1000)
             }}
           >
-            {copiedHtml ? 'Copied to clipboard!' : 'Copy HTML'}
+            {copiedHtml ? 'Copied to clipboard!' : 'Copy highlighted sequence'}
         </Button>
+        <Tooltip
+          target="CopyHighlightedButton"
+          isOpen={tooltipOpen}
+          placement="right"
+          toggle={() => { setTooltipOpen(!tooltipOpen) }}>
+             The ‘Copy highlighted sequence’ function retains the colors from the sequence panel but cannot be pasted into some programs like notepad that only expect plain text.
+        </Tooltip>
      <div style={ { display: 'flex' } }>
       <div className="p-2">
         <SequencePanel
