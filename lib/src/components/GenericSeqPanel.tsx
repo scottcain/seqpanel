@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
 import { assembleBundle } from "../assembleBundle";
 import { Feature } from "@jbrowse/core/util";
-import copy from 'copy-to-clipboard'
-import { Button } from 'reactstrap';
+//import copy from 'copy-to-clipboard'
+//import { Button } from 'reactstrap';
 
 type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
 
