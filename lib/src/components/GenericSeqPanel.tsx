@@ -105,7 +105,7 @@ export default function GenericSeqPanel({
           isOpen={tooltipOpen}
           placement="right"
           toggle={() => { setTooltipOpen(!tooltipOpen) }}>
-             The ‘Copy highlighted sequence’ function retains the colors from the sequence panel but cannot be pasted into some programs like notepad that only expect plain text.
+             {<>The ‘Copy highlighted sequence’ function retains the colors from the sequence panel<br /> but cannot be pasted into some programs like notepad that only expect plain text.</>}
         </Tooltip>
      <div style={ { display: 'flex' } }>
       <div className="p-2">
