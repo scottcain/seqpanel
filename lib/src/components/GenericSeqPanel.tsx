@@ -74,6 +74,7 @@ export default function GenericSeqPanel({
      <>
      <Button
           variant="contained"
+          style={{height: '34px' }}
           onClick={() => {
             const ref = seqPanelRef.current
             if (ref) {
@@ -87,6 +88,7 @@ export default function GenericSeqPanel({
         </Button>
         <Button
             id="CopyHighlightedButton"
+            style={{height: '34px' }}
             variant="contained"
             onClick={() => {
               const ref = seqPanelRef.current
@@ -105,7 +107,7 @@ export default function GenericSeqPanel({
           isOpen={tooltipOpen}
           placement="right"
           toggle={() => { setTooltipOpen(!tooltipOpen) }}>
-             {<>The ‘Copy highlighted sequence’ function retains the colors from the sequence panel<br /> but cannot be pasted into some programs like notepad that only expect plain text.</>}
+             {<span style={{ fontSize: "small" }}>The ‘Copy highlighted sequence’ function retains the colors from the sequence panel<br /> but cannot be pasted into some programs like notepad that only expect plain text.</span>}
         </Tooltip>
      <div style={ { display: 'flex' } }>
       <div className="p-2">
