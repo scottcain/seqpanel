@@ -88,7 +88,7 @@ This component makes use of three components developed by the JBrowse team:
   genes and their children (transcripts, exons, etc) that overlap. The code
   GenericSeqPanel then filters the feature set to the gene and transcript
   specified in the props of the component.
-- BgzipIndexedFasta from "@gmod/indexedfasta" - This access the bgzipped,
+- BgzipIndexedFasta from "@gmod/indexedfasta" - This accesses the bgzipped,
   samtools faidx indexed fasta file. The locations of the .fai and .gzi files
   are found by just appending those extensions to the supplied fastaurl.
 - SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel" - This
@@ -112,10 +112,10 @@ Pull requests are accepted.
 
 ### Output
 
-In this screenshot, the actual output of the GenericSeqPanel component is the fasta sequence
-only. The other elements (dropdown menus and the legend) were added in the page
-to make it more clear how it can be used, and in fact look similar to what you 
-can expect from GenericGeneSeqPanel.
+In this screenshot, the actual output of the GenericGeneSeqPanel component is
+shown. The portion that is just the highlighted fasta is what is provided by
+GenericSeqPanel, and the rest of the UI (dropdown menus, buttons, and legend)
+are provided by GenericGeneSeqPanel. 
 
 ![Screenshot of sample output showing a few dozen rows of fasta sequence with color highlighting](/img/example_output.png)
 
