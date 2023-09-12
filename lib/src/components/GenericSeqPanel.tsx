@@ -70,8 +70,22 @@ export default function GenericSeqPanel({
   } else if (!result) {
     return <div>Loading...</div>;
   } else {
-    return (
+    return(
      <>
+       <div>
+        {  
+        () => {const ref = seqPanelRef.current;
+	console.log('is this executing?');
+        if (ref && ref.textContent) {
+	    console.log(ref.textContent);
+            const strLen = ref.textContent.substring(ref.textContent.indexOf("\n")).length || "0";
+            console.log(ref.innerText.substring(ref.textContent.indexOf("\n")));
+            return "<div>length: "+strLen+ "residues</div>"; }
+        else {
+            return '<div>No length</div>';
+	    }
+	} }
+	</div>
      <Button
           variant="contained"
           style={{height: '34px' }}
@@ -109,6 +123,11 @@ export default function GenericSeqPanel({
           toggle={() => { setTooltipOpen(!tooltipOpen) }}>
              {<span style={{ fontSize: "small" }}>The ‘Copy highlighted sequence’ function retains the colors from the sequence panel<br /> but cannot be pasted into some programs like notepad that only expect plain text.</span>}
         </Tooltip>
+     {/* 
+        NOTE: this is not good enough. Need to reach into the SequencePanel (hopefully via 'ref')
+        to get was is actually displayed and find it's length (with linefeeds and header removed)
+     <div>Sequence length: {result.sequence.seq.length} residues</div>
+     */}
      <div style={ { display: 'flex' } }>
       <div className="p-2">
         <SequencePanel
