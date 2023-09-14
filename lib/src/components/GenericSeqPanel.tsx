@@ -72,9 +72,10 @@ export default function GenericSeqPanel({
   } else {
     return (
      <>
+     <p>
      <Button
+          className="align-baseline dropdown-toggle btn btn-primary"
           variant="contained"
-          style={{height: '34px' }}
           onClick={() => {
             const ref = seqPanelRef.current
             if (ref) {
@@ -86,9 +87,10 @@ export default function GenericSeqPanel({
         >
           {copied ? 'Copied to clipboard!' : 'Copy plaintext'}
         </Button>
+        &nbsp;
         <Button
+            className="align-baseline dropdown-toggle btn btn-primary"
             id="CopyHighlightedButton"
-            style={{height: '34px' }}
             variant="contained"
             onClick={() => {
               const ref = seqPanelRef.current
@@ -102,6 +104,7 @@ export default function GenericSeqPanel({
           >
             {copiedHtml ? 'Copied to clipboard!' : 'Copy highlighted sequence'}
         </Button>
+        </p>
         <Tooltip
           target="CopyHighlightedButton"
           isOpen={tooltipOpen}

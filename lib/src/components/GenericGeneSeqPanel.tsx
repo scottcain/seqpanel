@@ -59,6 +59,7 @@ export default function GenericGeneSeqPanel(props: {
             </option>
           ))}
         </select>
+        &nbsp;
         Mode:
         <select onChange={e => setMode(e.target.value)}>
           <option value="gene">gene</option>
