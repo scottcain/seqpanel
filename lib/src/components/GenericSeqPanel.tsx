@@ -131,7 +131,7 @@ export default function GenericSeqPanel({
           <li><span style={{ background: 'rgb(200, 255, 200)' }}>Genomic (i.e., unprocessed)</span></li>
           <li><span style={{ background: 'rgb(220, 160, 220)' }}>Amino acid</span></li>
         </ul>
-        <p style={{ fontSize: "small" }}>Note that lowercase bases generally indicate masked sequence.</p>
+        <p style={{ fontSize: "small" }}>Lowercase bases have been soft masked by NCBI Genomes to mark repetitive sequences.</p>
       </div>
      </div>
      </>
