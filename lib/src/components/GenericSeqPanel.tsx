@@ -74,7 +74,8 @@ export default function GenericSeqPanel({
      <>
      <p>
      <Button
-          className="align-baseline dropdown-toggle btn btn-primary"
+          color="primary"
+          className="align-baseline dropdown-toggle"
           variant="contained"
           onClick={() => {
             const ref = seqPanelRef.current
@@ -89,7 +90,8 @@ export default function GenericSeqPanel({
         </Button>
         &nbsp;
         <Button
-            className="align-baseline dropdown-toggle btn btn-primary"
+            color="primary"
+            className="align-baseline dropdown-toggle"
             id="CopyHighlightedButton"
             variant="contained"
             onClick={() => {
