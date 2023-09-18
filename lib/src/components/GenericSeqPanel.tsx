@@ -72,9 +72,11 @@ export default function GenericSeqPanel({
   } else {
     return (
      <>
+     <p>
      <Button
+          color="primary"
+          className="align-baseline dropdown-toggle"
           variant="contained"
-          style={{height: '34px' }}
           onClick={() => {
             const ref = seqPanelRef.current
             if (ref) {
@@ -86,9 +88,11 @@ export default function GenericSeqPanel({
         >
           {copied ? 'Copied to clipboard!' : 'Copy plaintext'}
         </Button>
+        &nbsp;
         <Button
+            color="primary"
+            className="align-baseline dropdown-toggle"
             id="CopyHighlightedButton"
-            style={{height: '34px' }}
             variant="contained"
             onClick={() => {
               const ref = seqPanelRef.current
@@ -102,6 +106,7 @@ export default function GenericSeqPanel({
           >
             {copiedHtml ? 'Copied to clipboard!' : 'Copy highlighted sequence'}
         </Button>
+        </p>
         <Tooltip
           target="CopyHighlightedButton"
           isOpen={tooltipOpen}
@@ -128,7 +133,7 @@ export default function GenericSeqPanel({
           <li><span style={{ background: 'rgb(200, 255, 200)' }}>Genomic (i.e., unprocessed)</span></li>
           <li><span style={{ background: 'rgb(220, 160, 220)' }}>Amino acid</span></li>
         </ul>
-        <p style={{ fontSize: "small" }}>Note that lowercase bases generally indicate masked sequence.</p>
+        <p style={{ fontSize: "small" }}>Lowercase bases have been soft masked by NCBI Genomes to mark repetitive sequences.</p>
       </div>
      </div>
      </>
