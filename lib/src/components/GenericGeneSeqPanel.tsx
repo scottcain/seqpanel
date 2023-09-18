@@ -47,6 +47,7 @@ export default function GenericGeneSeqPanel(props: {
   } else {
     return (
       <div className="GenericGeneSeqPanel">
+       <p>
         Transcript:
         <select
           onChange={e =>
@@ -80,7 +81,7 @@ export default function GenericGeneSeqPanel(props: {
             gene with 500bp up and down stream and collapsed introns
           </option>
         </select>
-        <br />
+       </p> 
         {feature ? (
           <GenericSeqPanel {...props} transcript={feature} mode={mode} />
         ) : null}
