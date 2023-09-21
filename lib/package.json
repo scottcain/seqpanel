@@ -5,7 +5,7 @@
   "repository": "scottcain/seqpanel",
   "main": "dist/index.js",
   "module": "esm/index.js",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "keywords": [
     "bioinformatics",
     "gene page",

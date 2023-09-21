@@ -75,7 +75,7 @@ export default function GenericSeqPanel({
      <p>
      <Button
           color="primary"
-          className="align-baseline dropdown-toggle"
+          className="align-baseline"
           variant="contained"
           onClick={() => {
             const ref = seqPanelRef.current
@@ -86,12 +86,12 @@ export default function GenericSeqPanel({
             }
           }}
         >
-          {copied ? 'Copied to clipboard!' : 'Copy plaintext'}
+          {copied ? 'Copied to clipboard!' : 'Copy plain text'}
         </Button>
         &nbsp;
         <Button
             color="primary"
-            className="align-baseline dropdown-toggle"
+            className="align-baseline"
             id="CopyHighlightedButton"
             variant="contained"
             onClick={() => {
@@ -104,7 +104,7 @@ export default function GenericSeqPanel({
               setTimeout(() => setCopiedHtml(false), 1000)
             }}
           >
-            {copiedHtml ? 'Copied to clipboard!' : 'Copy highlighted sequence'}
+            {copiedHtml ? 'Copied to clipboard!' : 'Copy with highlights'}
         </Button>
         </p>
         <Tooltip
@@ -112,7 +112,7 @@ export default function GenericSeqPanel({
           isOpen={tooltipOpen}
           placement="right"
           toggle={() => { setTooltipOpen(!tooltipOpen) }}>
-             {<span style={{ fontSize: "small" }}>The ‘Copy highlighted sequence’ function retains the colors from the sequence panel<br /> but cannot be pasted into some programs like notepad that only expect plain text.</span>}
+             {<span style={{ fontSize: "small" }}>The ‘Copy with highlights’ function retains the colors from the sequence panel<br /> but cannot be pasted into some programs like notepad that only expect plain text.</span>}
         </Tooltip>
      <div style={ { display: 'flex' } }>
       <div className="p-2">
