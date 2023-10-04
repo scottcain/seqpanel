@@ -3,13 +3,13 @@ import { GenericGeneSeqPanel } from "generic-sequence-panel";
 export default function App() {
   return (
     <GenericGeneSeqPanel
-      refseq="II"
-      start={162374}
-      end={170631}
-      gene="WBGene00001340"
-      nclistbaseurl="https://s3.amazonaws.com/agrjbrowse/MOD-jbrowses/WormBase/WS288/c_elegans_PRJNA13758/"
-      urltemplate="tracks/Curated_Genes/{refseq}/trackData.jsonz"
-      fastaurl="https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS284.genomic.fa.gz"
+      refseq="16"
+      start={5239721}
+      end={7713340}
+      gene="RBFOX1"
+      nclistbaseurl="https://s3.amazonaws.com/agrjbrowse/docker/6.0.0/human/"
+      urltemplate="tracks/All_Genes/{refseq}/trackData.jsonz"
+      fastaurl="https://s3.amazonaws.com/agrjbrowse/fasta/GCF_000001405.40_GRCh38.p14_genomic.fna.gz"
     />
   );
 }
