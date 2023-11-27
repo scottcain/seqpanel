@@ -86,7 +86,7 @@ export default function GenericSeqPanel({
             }
           }}
         >
-          {copied ? 'Copied to clipboard!' : 'Copy plain text'}
+          {copied ? 'Copied to clipboard!' : 'Copy plain fasta'}
         </Button>
         &nbsp;
         <Button
@@ -104,7 +104,7 @@ export default function GenericSeqPanel({
               setTimeout(() => setCopiedHtml(false), 1000)
             }}
           >
-            {copiedHtml ? 'Copied to clipboard!' : 'Copy with highlights'}
+            {copiedHtml ? 'Copied to clipboard!' : 'Copy highlighted fasta'}
         </Button>
         </p>
         <Tooltip
