@@ -20,6 +20,11 @@ export default function GenericGeneSeqPanel(props: {
   const [transcript, setTranscript] = useState<Feature>();
   const [mode, setMode] = useState("gene");
   const feature = transcript || result?.[0];
+
+  if (refseq == 'NC_045512.2') {
+    return <div>Unfortunately, Sequence Details doesn't yet support fetching viral sequences; sorry.</div>;
+  }
+
   useEffect(() => {
     (async () => {
       try {

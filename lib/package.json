@@ -46,6 +46,7 @@
     "generic-filehandle": "^3.0.1",
     "mobx": "^6.8.0",
     "mobx-state-tree": "^5.1.8",
+    "reactstrap": "^9.2.2",
     "rxjs": "^7.8.0",
     "tslib": "^2.1.0"
   },
