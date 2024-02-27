@@ -2,7 +2,10 @@
   "name": "generic-sequence-panel",
   "description": "read feature and sequence data and produce highlighted fasta",
   "license": "MIT",
-  "repository": "scottcain/seqpanel",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scottcain/seqpanel.git"
+  },
   "main": "dist/index.js",
   "module": "esm/index.js",
   "version": "1.4.0",
