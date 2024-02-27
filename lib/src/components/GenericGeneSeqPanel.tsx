@@ -20,6 +20,7 @@ export default function GenericGeneSeqPanel(props: {
   const [transcript, setTranscript] = useState<Feature>();
   const [mode, setMode] = useState("gene");
   const feature = transcript || result?.[0];
+
   useEffect(() => {
     (async () => {
       try {
