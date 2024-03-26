@@ -124,7 +124,7 @@ export default function GenericSeqPanel({
         />
       </div>
       <div className="p-2">
-        <p>Legend:</p>
+        <p>&nbsp;Legend:</p>
         <ul>
           <li><span style={{ background: 'rgb(250, 200, 200)' }}>Up/downstream</span></li>
           <li><span style={{ background: 'rgb(200, 240, 240)' }}>UTR</span></li>
@@ -133,7 +133,8 @@ export default function GenericSeqPanel({
           <li><span style={{ background: 'rgb(200, 255, 200)' }}>Genomic (i.e., unprocessed)</span></li>
           <li><span style={{ background: 'rgb(220, 160, 220)' }}>Amino acid</span></li>
         </ul>
-        <p style={{ fontSize: "small" }}>Lowercase bases have been soft masked by NCBI Genomes to mark repetitive sequences.</p>
+	<p>&nbsp;<b>IMPORTANT NOTE</b>: Transcript and protein sequences here are derived from GFF coordinate mapping to the reference assembly. It is possible that this sequence differs from the transcript or amino acid sequence reported in NCBI RefSeq when the transcript or protein has its own NCBI RefSeq entry that differs from the genome assembly.</p>
+        <p style={{ fontSize: "small" }}>&nbsp;Lowercase bases have been soft masked by NCBI Genomes to mark repetitive sequences.</p>
       </div>
      </div>
      </>
