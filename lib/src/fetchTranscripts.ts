@@ -22,7 +22,6 @@ export default async function fetchTranscripts({
   gene,
 }: {
   nclistbaseurl: string;
-  fastaurl: string;
   urltemplate: string;
   refseq: string;
   start: number;
