@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @ypescript-eslint/no-unused-vars
 import React, { useState, useEffect } from "react";
 import transcriptList from "../fetchTranscripts";
 import { Feature } from "@jbrowse/core/util";
@@ -10,12 +10,12 @@ export default function TrascriptMenu(props: {
   end: number;
   gene: string;
   urltemplate: string;
-}) {
+}, {transcriptFromMenu}:Feature) {
   const { nclistbaseurl, refseq, start, end, gene, urltemplate } =
     props;
   const [result, setResult] = useState<Feature[]>();
   const [error, setError] = useState<unknown>();
-  const [transcript, setTranscript] = useState<Feature>();
+  //const [transcript, setTranscript] = useState<Feature>();
 
   useEffect(() => {
     (async () => {
@@ -46,7 +46,7 @@ export default function TrascriptMenu(props: {
         Transcript:
         <select
           onChange={e =>
-            setTranscript(result.find(r => r.id() === e.target.value))
+            transcriptFromMenu(result.find(r => r.id() === e.target.value))
           }
         >
           {result.map(r => (

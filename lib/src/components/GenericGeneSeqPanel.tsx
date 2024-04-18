@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useState, useEffect } from "react";
 import GenericSeqPanel from "./GenericSeqPanel";
-import transcriptList from "../fetchTranscripts";
+import TranscriptMenu from "./TranscriptMenu";
 import { Feature } from "@jbrowse/core/util";
 
 export default function GenericGeneSeqPanel(props: {
@@ -15,51 +15,22 @@ export default function GenericGeneSeqPanel(props: {
 }) {
   const { nclistbaseurl, fastaurl, refseq, start, end, gene, urltemplate } =
     props;
-  const [result, setResult] = useState<Feature[]>();
-  const [error, setError] = useState<unknown>();
   const [transcript, setTranscript] = useState<Feature>();
+  //const [transcript, setTranscript] = useState('');
   const [mode, setMode] = useState("gene");
-  const feature = transcript || result?.[0];
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await transcriptList({
-          nclistbaseurl,
-          refseq,
-          start,
-          end,
-          gene,
-          urltemplate,
-        });
-        setResult(res);
-      } catch (e) {
-        console.error(e);
-        setError(e);
-      }
-    })();
-  }, [nclistbaseurl, refseq, start, end, gene, urltemplate]);
+  //const feature = transcript || result?.[0];
 
-  if (error) {
-    return <div style={{ color: "red" }}>{`${error}`}</div>;
-  } else if (!result) {
-    return <div>Loading...</div>;
-  } else {
-    return (
+  const transcriptFromMenu = (transcriptData: Feature) => {
+    setTranscript(transcriptData);
+  }
+
+
+
+  return (
       <div className="GenericGeneSeqPanel">
        <p>
-        Transcript:
-        <select
-          onChange={e =>
-            setTranscript(result.find(r => r.id() === e.target.value))
-          }
-        >
-          {result.map(r => (
-            <option key={r.id()} value={r.id()}>
-              {r.get("name")}
-            </option>
-          ))}
-        </select>
+         <TranscriptMenu {...props} transcriptFromMenu={transcriptFromMenu} />
         &nbsp;
         Mode:
         <select onChange={e => setMode(e.target.value)}>
@@ -82,10 +53,9 @@ export default function GenericGeneSeqPanel(props: {
           </option>
         </select>
        </p> 
-        {feature ? (
-          <GenericSeqPanel {...props} transcript={feature} mode={mode} />
+        {transcript ? (
+          <GenericSeqPanel {...props} transcript={transcript} mode={mode} />
         ) : null}
       </div>
-    );
-  }
+  );
 }
