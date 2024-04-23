@@ -16,6 +16,8 @@ export default function TrascriptMenu(props: {
   const [error, setError] = useState<unknown>();
   const [transcript, setTranscript] = useState<Feature>();
   const [transcriptArray, setTranscriptArray] = useState<Feature[]>();
+  //const [transcript, setTranscript] = useState();
+  //const [transcriptArray, setTranscriptArray] = useState([]);
 
   useEffect(() => {
     (async () => {
