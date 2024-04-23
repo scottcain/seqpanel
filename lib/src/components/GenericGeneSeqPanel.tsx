@@ -15,22 +15,21 @@ export default function GenericGeneSeqPanel(props: {
 }) {
   const { nclistbaseurl, fastaurl, refseq, start, end, gene, urltemplate } =
     props;
-  const [transcript, setTranscript] = useState<Feature>();
-  //const [transcript, setTranscript] = useState('');
+  //const [transcript, setTranscript] = useState<Feature>();
+  const [transcript, setTranscript] = useState();
   const [mode, setMode] = useState("gene");
-
-  //const feature = transcript || result?.[0];
-
-  const transcriptFromMenu = (transcriptData: Feature) => {
-    setTranscript(transcriptData);
-  }
-
-
 
   return (
       <div className="GenericGeneSeqPanel">
        <p>
-         <TranscriptMenu {...props} transcriptFromMenu={transcriptFromMenu} />
+         <TranscriptMenu 
+	   nclistbaseurl={props.nclistbaseurl}
+           refseq={props.refseq}
+           start={props.start}
+           end={props.end}
+           gene={props.gene}
+           urltemplate={props.urltemplate}
+           onChange={event => setTranscript(event.target.value)} />
         &nbsp;
         Mode:
         <select onChange={e => setMode(e.target.value)}>

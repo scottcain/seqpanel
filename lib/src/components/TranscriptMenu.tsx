@@ -10,12 +10,12 @@ export default function TrascriptMenu(props: {
   end: number;
   gene: string;
   urltemplate: string;
-}, {transcriptFromMenu}:Feature) {
+} ) {
   const { nclistbaseurl, refseq, start, end, gene, urltemplate } =
     props;
-  const [result, setResult] = useState<Feature[]>();
   const [error, setError] = useState<unknown>();
-  //const [transcript, setTranscript] = useState<Feature>();
+  const [transcript, setTranscript] = useState<Feature>();
+  const [transcriptArray, setTranscriptArray] = useState<Feature[]>();
 
   useEffect(() => {
     (async () => {
@@ -26,9 +26,10 @@ export default function TrascriptMenu(props: {
           start,
           end,
           gene,
-          urltemplate,
+          urltemplate
         });
-        setResult(res);
+        setTranscriptArray(res);
+        setTranscript(res[0]);  //set the initial selection to the first item in the list
       } catch (e) {
         console.error(e);
         setError(e);
@@ -38,24 +39,36 @@ export default function TrascriptMenu(props: {
 
   if (error) {
     return <div style={{ color: "red" }}>{`${error}`}</div>;
-  } else if (!result) {
+  } else if (!transcriptArray) {
     return <div>Loading...</div>;
   } else {
+    return (
+       <TranscriptMenu2
+           selection={transcript}
+           options={transcriptArray}
+           onChange={transcript => setTranscript(transcript)}
+       />
+    );
+  }
+}
+
+function TranscriptMenu2(props: {selection: any; options: any } ) {
+
+    const [transcript, setTranscript] = useState(props.selection);    
+
     return (
       <div className="TranscriptMenu">
         Transcript:
         <select
-          onChange={e =>
-            transcriptFromMenu(result.find(r => r.id() === e.target.value))
-          }
+  	  onChange={event => setTranscript(event.target.value)}
         >
-          {result.map(r => (
-            <option key={r.id()} value={r.id()}>
-              {r.get("name")}
-            </option>
-          ))}
+      {props.options.map(o => (
+        <option key={o} value={o}>
+          {o}
+        </option>
+      ))}
         </select>
       </div>
     );
-  }
+
 }
