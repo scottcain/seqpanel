@@ -46,7 +46,7 @@ export default function TrascriptMenu(props: {
     return <div>Loading...</div>;
   } else {
     return 
-      { feature ? (
+      { (feature && typeof transcriptArray !== 'undefined' && transcriptArray.length>0) ? (
        <TranscriptMenu2
            selection={transcript}
            options={transcriptArray}
