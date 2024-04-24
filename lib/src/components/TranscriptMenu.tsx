@@ -18,6 +18,7 @@ export default function TrascriptMenu(props: {
   const [transcriptArray, setTranscriptArray] = useState<Feature[]>();
   //const [transcript, setTranscript] = useState();
   //const [transcriptArray, setTranscriptArray] = useState([]);
+  const feature = transcript || transcriptArray?.[0];
 
   useEffect(() => {
     (async () => {
@@ -44,30 +45,32 @@ export default function TrascriptMenu(props: {
   } else if (!transcriptArray) {
     return <div>Loading...</div>;
   } else {
-    return (
+    return 
+      { feature ? (
        <TranscriptMenu2
            selection={transcript}
            options={transcriptArray}
-           onChange={transcript => setTranscript(transcript)}
-       />
-    );
+           onChange={selection => setTranscript(transcript)}
+       /> 
+       ) : <div></div> }  
+    ;
   }
 }
 
-function TranscriptMenu2(props: {selection: any; options: any } ) {
+function TranscriptMenu2(props: {selection: Feature; options: Feature[] } ) {
 
-    const [transcript, setTranscript] = useState(props.selection);    
+    const [transcript, setTranscript] = useState<Feature>();    
 
     return (
       <div className="TranscriptMenu">
         Transcript:
         <select
-  	  onChange={event => setTranscript(event.target.value)}
+  	  onChange={event => setTranscript(props.options.find(o => o.id() === event.target.value))}
         >
       {props.options.map(o => (
-        <option key={o} value={o}>
-          {o}
-        </option>
+            <option key={o.id()} value={o.id()}>
+              {o.get("name")}
+            </option>
       ))}
         </select>
       </div>

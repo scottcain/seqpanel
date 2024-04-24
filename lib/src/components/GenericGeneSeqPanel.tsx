@@ -15,8 +15,8 @@ export default function GenericGeneSeqPanel(props: {
 }) {
   const { nclistbaseurl, fastaurl, refseq, start, end, gene, urltemplate } =
     props;
-  //const [transcript, setTranscript] = useState<Feature>();
-  const [transcript, setTranscript] = useState();
+  const [transcript, setTranscript] = useState<Feature>();
+  //const [transcript, setTranscript] = useState();
   const [mode, setMode] = useState("gene");
 
   return (
