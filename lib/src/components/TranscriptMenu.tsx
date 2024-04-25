@@ -10,7 +10,7 @@ export default function TrascriptMenu(props: {
   end: number;
   gene: string;
   urltemplate: string;
-} ) {
+}) {
   const { nclistbaseurl, refseq, start, end, gene, urltemplate } =
     props;
   const [error, setError] = useState<unknown>();
@@ -45,35 +45,34 @@ export default function TrascriptMenu(props: {
   } else if (!transcriptArray) {
     return <div>Loading...</div>;
   } else {
-    return 
-      { (feature && typeof transcriptArray !== 'undefined' && transcriptArray.length>0) ? (
-       <TranscriptMenu2
-           selection={transcript}
-           options={transcriptArray}
-           onChange={selection => setTranscript(transcript)}
-       /> 
-       ) : <div></div> }  
-    ;
+    return (transcript && feature && typeof transcriptArray !== 'undefined' && transcriptArray.length > 0) ? (
+      <TranscriptMenu2
+        selection={transcript}
+        options={transcriptArray}
+        onChange={selection => setTranscript(transcript)}
+      />
+    ) : null
+
   }
 }
 
-function TranscriptMenu2(props: {selection: Feature; options: Feature[] } ) {
+function TranscriptMenu2({ value, options, onChange }: { value: string; options: Feature[], setTranscript: () => void }) {
+  const [transcript, setTranscript] = useState<Feature>();
 
-    const [transcript, setTranscript] = useState<Feature>();    
-
-    return (
-      <div className="TranscriptMenu">
-        Transcript:
-        <select
-  	  onChange={event => setTranscript(props.options.find(o => o.id() === event.target.value))}
-        >
-      {props.options.map(o => (
-            <option key={o.id()} value={o.id()}>
-              {o.get("name")}
-            </option>
-      ))}
-        </select>
-      </div>
-    );
+  return (
+    <div className="TranscriptMenu">
+      Transcript:
+      <select
+        value={transcript}
+        onChange={event => setTranscript(options.find(o => o.id() === event.target.value))}
+      >
+        {options.map(o => (
+          <option key={o.id()} value={o.id()}>
+            {o.get("name")}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
 
 }
