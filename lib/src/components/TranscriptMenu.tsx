@@ -1,24 +1,27 @@
-// eslint-disable-next-line @ypescript-eslint/no-unused-vars
 import React, { useState, useEffect } from "react";
 import transcriptList from "../fetchTranscripts";
 import { Feature } from "@jbrowse/core/util";
 
-export default function TrascriptMenu(props: {
+export default function TrascriptMenu({
+  nclistbaseurl,
+  refseq,
+  start,
+  end,
+  gene,
+  urltemplate,
+  onChange,
+}: {
   nclistbaseurl: string;
   refseq: string;
   start: number;
   end: number;
   gene: string;
   urltemplate: string;
+  onChange: (arg: Feature) => void;
 }) {
-  const { nclistbaseurl, refseq, start, end, gene, urltemplate } =
-    props;
   const [error, setError] = useState<unknown>();
   const [transcript, setTranscript] = useState<Feature>();
   const [transcriptArray, setTranscriptArray] = useState<Feature[]>();
-  //const [transcript, setTranscript] = useState();
-  //const [transcriptArray, setTranscriptArray] = useState([]);
-  const feature = transcript || transcriptArray?.[0];
 
   useEffect(() => {
     (async () => {
@@ -29,10 +32,10 @@ export default function TrascriptMenu(props: {
           start,
           end,
           gene,
-          urltemplate
+          urltemplate,
         });
         setTranscriptArray(res);
-        setTranscript(res[0]);  //set the initial selection to the first item in the list
+        setTranscript(res[0]); //set the initial selection to the first item in the list
       } catch (e) {
         console.error(e);
         setError(e);
@@ -40,32 +43,40 @@ export default function TrascriptMenu(props: {
     })();
   }, [nclistbaseurl, refseq, start, end, gene, urltemplate]);
 
+  useEffect(() => {
+    if (transcript) {
+      onChange(transcript);
+    }
+  }, [transcript, onChange]);
+
   if (error) {
     return <div style={{ color: "red" }}>{`${error}`}</div>;
   } else if (!transcriptArray) {
     return <div>Loading...</div>;
   } else {
-    return (transcript && feature && typeof transcriptArray !== 'undefined' && transcriptArray.length > 0) ? (
+    return transcript && transcriptArray ? (
       <TranscriptMenu2
-        selection={transcript}
+        value={transcript.id()}
         options={transcriptArray}
-        onChange={selection => setTranscript(transcript)}
+        onChange={str => transcriptArray.find(t => t.id() === str)}
       />
-    ) : null
-
+    ) : null;
   }
 }
 
-function TranscriptMenu2({ value, options, onChange }: { value: string; options: Feature[], setTranscript: () => void }) {
-  const [transcript, setTranscript] = useState<Feature>();
-
+function TranscriptMenu2({
+  value,
+  options,
+  onChange,
+}: {
+  value: string;
+  options: Feature[];
+  onChange: (arg: string) => void;
+}) {
   return (
-    <div className="TranscriptMenu">
+    <div>
       Transcript:
-      <select
-        value={transcript}
-        onChange={event => setTranscript(options.find(o => o.id() === event.target.value))}
-      >
+      <select value={value} onChange={event => onChange(event.target.value)}>
         {options.map(o => (
           <option key={o.id()} value={o.id()}>
             {o.get("name")}
@@ -74,5 +85,4 @@ function TranscriptMenu2({ value, options, onChange }: { value: string; options:
       </select>
     </div>
   );
-
 }

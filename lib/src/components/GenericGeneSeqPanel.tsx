@@ -1,10 +1,17 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import GenericSeqPanel from "./GenericSeqPanel";
 import TranscriptMenu from "./TranscriptMenu";
 import { Feature } from "@jbrowse/core/util";
 
-export default function GenericGeneSeqPanel(props: {
+export default function GenericGeneSeqPanel({
+  nclistbaseurl,
+  fastaurl,
+  refseq,
+  start,
+  end,
+  gene,
+  urltemplate,
+}: {
   nclistbaseurl: string;
   fastaurl: string;
   refseq: string;
@@ -13,25 +20,22 @@ export default function GenericGeneSeqPanel(props: {
   gene: string;
   urltemplate: string;
 }) {
-  const { nclistbaseurl, fastaurl, refseq, start, end, gene, urltemplate } =
-    props;
   const [transcript, setTranscript] = useState<Feature>();
-  //const [transcript, setTranscript] = useState();
   const [mode, setMode] = useState("gene");
 
   return (
-      <div className="GenericGeneSeqPanel">
-       <p>
-         <TranscriptMenu 
-	   nclistbaseurl={props.nclistbaseurl}
-           refseq={props.refseq}
-           start={props.start}
-           end={props.end}
-           gene={props.gene}
-           urltemplate={props.urltemplate}
-           onChange={event => setTranscript(event.target.value)} />
-        &nbsp;
-        Mode:
+    <div className="GenericGeneSeqPanel">
+      <div>
+        <TranscriptMenu
+          nclistbaseurl={nclistbaseurl}
+          refseq={refseq}
+          start={start}
+          end={end}
+          gene={gene}
+          urltemplate={urltemplate}
+          onChange={feature => setTranscript(feature)}
+        />
+        &nbsp; Mode:
         <select onChange={e => setMode(e.target.value)}>
           <option value="gene">gene</option>
           <option value="cds">CDS</option>
@@ -51,10 +55,20 @@ export default function GenericGeneSeqPanel(props: {
             gene with 500bp up and down stream and collapsed introns
           </option>
         </select>
-       </p> 
-        {transcript ? (
-          <GenericSeqPanel {...props} transcript={transcript} mode={mode} />
-        ) : null}
       </div>
+      {transcript ? (
+        <GenericSeqPanel
+          start={start}
+          end={end}
+          refseq={refseq}
+          gene={gene}
+          fastaurl={fastaurl}
+          urltemplate={urltemplate}
+          nclistbaseurl={nclistbaseurl}
+          transcript={transcript}
+          mode={mode}
+        />
+      ) : null}
+    </div>
   );
 }
