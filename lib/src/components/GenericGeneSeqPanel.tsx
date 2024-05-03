@@ -1,10 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import GenericSeqPanel from "./GenericSeqPanel";
 import transcriptList from "../fetchTranscripts";
 import { Feature } from "@jbrowse/core/util";
 
-export default function GenericGeneSeqPanel(props: {
+export function GenericGeneSeqPanel(props: {
   nclistbaseurl: string;
   fastaurl: string;
   refseq: string;
@@ -48,41 +48,40 @@ export default function GenericGeneSeqPanel(props: {
   } else {
     return (
       <div className="GenericGeneSeqPanel">
-       <p>
-        Transcript:
-        <select
-          onChange={e =>
-            setTranscript(result.find(r => r.id() === e.target.value))
-          }
-        >
-          {result.map(r => (
-            <option key={r.id()} value={r.id()}>
-              {r.get("name")}
+        <p>
+          Transcript:
+          <select
+            onChange={e =>
+              setTranscript(result.find(r => r.id() === e.target.value))
+            }
+          >
+            {result.map(r => (
+              <option key={r.id()} value={r.id()}>
+                {r.get("name")}
+              </option>
+            ))}
+          </select>
+          &nbsp; Mode:
+          <select onChange={e => setMode(e.target.value)}>
+            <option value="gene">gene</option>
+            <option value="cds">CDS</option>
+            <option value="cdna">cDNA</option>
+            <option value="protein">protein</option>
+            <option value="genomic">genomic</option>
+            <option value="genomic_sequence_updown">
+              genomic +500bp up and down stream
             </option>
-          ))}
-        </select>
-        &nbsp;
-        Mode:
-        <select onChange={e => setMode(e.target.value)}>
-          <option value="gene">gene</option>
-          <option value="cds">CDS</option>
-          <option value="cdna">cDNA</option>
-          <option value="protein">protein</option>
-          <option value="genomic">genomic</option>
-          <option value="genomic_sequence_updown">
-            genomic +500bp up and down stream
-          </option>
-          <option value="gene_collapsed_intron">
-            gene with collapsed introns
-          </option>
-          <option value="gene_updownstream">
-            gene with 500bp up and down stream
-          </option>
-          <option value="gene_updownstream_collapsed_intron">
-            gene with 500bp up and down stream and collapsed introns
-          </option>
-        </select>
-       </p> 
+            <option value="gene_collapsed_intron">
+              gene with collapsed introns
+            </option>
+            <option value="gene_updownstream">
+              gene with 500bp up and down stream
+            </option>
+            <option value="gene_updownstream_collapsed_intron">
+              gene with 500bp up and down stream and collapsed introns
+            </option>
+          </select>
+        </p>
         {feature ? (
           <GenericSeqPanel {...props} transcript={feature} mode={mode} />
         ) : null}
