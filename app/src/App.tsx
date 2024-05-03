@@ -1,18 +1,22 @@
-import GenericGeneSeqPanel from "generic-sequence-panel";
-import fetchTranscripts from "generic-sequence-panel";
+import { GenericGeneSeqPanel } from "generic-sequence-panel";
+import fetchTranscripts from "../../lib/src/fetchTranscripts";
 
-const res = await fetchTranscripts({
-  nclistbaseurl: "https://s3.amazonaws.com/agrjbrowse/docker/7.0.0/human/",
-  fastaurl: "https://s3.amazonaws.com/agrjbrowse/fasta/sarscov2.fasta.gz",
-  refseq: "X",
-  start: 31097677,
-  end: 33339609,
-  gene: "DMD",
-  urltemplate: "tracks/All_Genes/{refseq}/trackData.jsonz",
-});
-console.log(res);
+async function App() {
+  try {
+    const res = await fetchTranscripts({
+      nclistbaseurl: "https://s3.amazonaws.com/agrjbrowse/docker/7.0.0/human/",
+      fastaurl: "https://s3.amazonaws.com/agrjbrowse/fasta/sarscov2.fasta.gz",
+      refseq: "X",
+      start: 31097677,
+      end: 33339609,
+      gene: "DMD",
+      urltemplate: "tracks/All_Genes/{refseq}/trackData.jsonz",
+    });
+    console.log(res);
+  } catch (e) {
+    console.error(e);
+  }
 
-export default function App() {
   return (
     <div>
       <GenericGeneSeqPanel
