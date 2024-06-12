@@ -26,7 +26,6 @@ export default function GenericGeneSeqPanel(props: {
       try {
         const res = await transcriptList({
           nclistbaseurl,
-          fastaurl,
           refseq,
           start,
           end,

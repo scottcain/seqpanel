@@ -9,8 +9,6 @@ export default function App() {
         const res = await fetchTranscripts({
           nclistbaseurl:
             "https://s3.amazonaws.com/agrjbrowse/docker/7.0.0/human/",
-          fastaurl:
-            "https://s3.amazonaws.com/agrjbrowse/fasta/sarscov2.fasta.gz",
           refseq: "X",
           start: 31097677,
           end: 33339609,
