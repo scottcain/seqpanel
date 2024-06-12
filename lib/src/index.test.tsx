@@ -5,7 +5,7 @@ import GenericGeneSeqPanel from "./components/GenericGeneSeqPanel";
 import fetch from "node-fetch";
 
 // @ts-expect-error
-global.fetch = fetch;
+globalThis.fetch = fetch;
 
 test("expect protein rendering", async () => {
   const { findByText } = render(
