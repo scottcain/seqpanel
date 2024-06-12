@@ -9,11 +9,6 @@
   "main": "dist/index.js",
   "module": "esm/index.js",
   "version": "1.4.1",
-  "exports": [
-    "./src/components/GenericGeneSeqPanel.tsx",
-    "./src/components/GenericSeqPanel.tsx",
-    "./src/fetchTranscripts.ts"
-  ],
   "keywords": [
     "bioinformatics",
     "gene page",
