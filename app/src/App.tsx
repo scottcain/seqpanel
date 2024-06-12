@@ -1,7 +1,7 @@
 import { GenericGeneSeqPanel } from "generic-sequence-panel";
-import fetchTranscripts from "../../lib/src/fetchTranscripts";
+import fetchTranscripts from "generic-sequence-panel";
 
-async function App() {
+export default async function App() {
   try {
     const res = await fetchTranscripts({
       nclistbaseurl: "https://s3.amazonaws.com/agrjbrowse/docker/7.0.0/human/",
