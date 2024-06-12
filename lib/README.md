@@ -4,11 +4,12 @@
 
 ## About
 
-This package provides two React components: GenericSeqPanel and GenericGeneSeqPanel which
-have similar arguments.  The difference between these two panels is this: GenericSeqPanel
-provides ONLY the highlighted FASTA given a gene, transcript and mode. GenericGeneSeqPanel 
-does a little more: you provide a gene and it gets a list of transcripts of that gene and
-provides a dropdown menu for both the transcript and the mode.
+This package provides two React components: GenericSeqPanel and
+GenericGeneSeqPanel which have similar arguments. The difference between these
+two panels is this: GenericSeqPanel provides ONLY the highlighted FASTA given a
+gene, transcript and mode. GenericGeneSeqPanel does a little more: you provide a
+gene and it gets a list of transcripts of that gene and provides a dropdown menu
+for both the transcript and the mode.
 
 The React components create a div containing highlighted FASTA DNA sequence. It
 uses as its input materials an NCList (i.e., a JBrowse 1 GFF3 formatted dataset)
@@ -19,9 +20,10 @@ component must also be supplied these items about the location:
 - the start and end coordinates (technically in interbase coordinates, but since
   the lookup is going to be an overlaps-type query, the details don't really
   matter if base versus interbase coordinates are used)
-- the name of the gene and transcript (only need for GenericSeqPanel) for which the highlighted fasta is
-  required
-- the "mode" of highlighting required (more on that below, and also only required by GenericSeqPanel)
+- the name of the gene and transcript (only need for GenericSeqPanel) for which
+  the highlighted fasta is required
+- the "mode" of highlighting required (more on that below, and also only
+  required by GenericSeqPanel)
 
 ### More usage details
 
@@ -36,7 +38,7 @@ component must also be supplied these items about the location:
       urltemplate="tracks/Curated_Genes/{refseq}/trackData.jsonz"
       fastaurl="https://s3.amazonaws.com/wormbase-modencode/fasta/current/c_elegans.PRJNA13758.WS284.genomic.fa.gz"
     />
-    
+
 and
 
     <GenericGeneSeqPanel
@@ -67,7 +69,7 @@ NClist data set. The remaining items are described here:
   - gene - The genomic sequence from start to end with portions that are UTR and
     coding highlighted
   - gene_collapsed_intron - same as gene, but the introns are compressed to 10
-    base pairs at the splice junction and the remainder replaced with ellipses 
+    base pairs at the splice junction and the remainder replaced with ellipses
   - gene_updownstream - same as gene but with 500 bp of up and down stream
     sequence added
   - gene_updownstream_collapsed_intron - same as gene_collapsed_intron but with
@@ -115,14 +117,14 @@ Pull requests are accepted.
 In this screenshot, the actual output of the GenericGeneSeqPanel component is
 shown. The portion that is just the highlighted fasta is what is provided by
 GenericSeqPanel, and the rest of the UI (dropdown menus, buttons, and legend)
-are provided by GenericGeneSeqPanel. 
+are provided by GenericGeneSeqPanel.
 
 ![Screenshot of sample output showing a few dozen rows of fasta sequence with color highlighting](/img/example_output.png)
 
 ###
 
-A simple example implementation (from the app directory in this monorepo) is running at
-https://scottcain.github.io/seqpanel/
+A simple example implementation (from the app directory in this monorepo) is
+running at https://scottcain.github.io/seqpanel/
 
 ## Acknowledgements
 
