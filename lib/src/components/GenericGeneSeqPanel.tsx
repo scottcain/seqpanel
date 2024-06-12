@@ -4,7 +4,7 @@ import GenericSeqPanel from "./GenericSeqPanel";
 import transcriptList from "../fetchTranscripts";
 import { Feature } from "@jbrowse/core/util";
 
-export function GenericGeneSeqPanel(props: {
+export default function GenericGeneSeqPanel(props: {
   nclistbaseurl: string;
   fastaurl: string;
   refseq: string;

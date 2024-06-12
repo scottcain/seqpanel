@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from "react";
 import { render } from "@testing-library/react";
-import { GenericGeneSeqPanel } from "./components/GenericGeneSeqPanel";
+import GenericGeneSeqPanel from "./components/GenericGeneSeqPanel";
 import fetch from "node-fetch";
 
 // @ts-expect-error
