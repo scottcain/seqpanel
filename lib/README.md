@@ -81,6 +81,64 @@ NClist data set. The remaining items are described here:
 - fastaurl - the url to the fasta file. The location of the .fai and .gzi files
   will be assumed from this url
 
+### fetchTranscripts
+
+This package also provides a helper function that is used internally to get the
+subfeature information for a given feature (gene). This function takes several
+arguments that are similar to the above components:
+
+- nclistbaseurl: the base URL of the NCList file
+- urltemplate: the URL template for the NCList file
+- refseq: the reference sequence (name, like "chr1")
+- start: the start of the range (in interbase coordinates)
+- end: the end of the range (in interbase coordinates)
+- gene: the name of the gene
+
+and returns an array of JBrowse 2-style feature objects that correspond to the
+gene's subfeatures (usually transcripts and their exons, UTRs and CDS regions).
+In the console, those features look like the below, but note that they can also
+be accessed via getter functions like `transcriptArray[0].get('name')` and
+`transcriptArray[i].get('start')`.
+
+```
+ [[
+  1,
+  31097676,                      // start coordinate (interbase coords)
+  31169556,                      // end coordinate
+  -1,                            // strand
+  "ENSEMBL:ENST00000481143.2",   // some sort of id
+  "DMD",                         // feature name
+  "rna97622",                    // some sort of id
+  "ENST00000481143.2",           // another id
+  "SO:0000673",                  // Sequence ontology term ID
+  "X",                           // reference sequence name
+  "ENSEMBL",                     // GFF source?
+  [[
+    2,                           // subfeature depth?
+    31097676,                    // subfeature start
+    31098183,                    // subfeature end
+    -1,                          // subfeature strand
+    "e893041",                   // subfeature name
+    "X",                         // subfeature refrence sequence name
+    "ENSEMBL",                   // subfeature GFF source
+    "exon"                       // subfeature SO term name
+   ],
+   [
+    2,
+    31169442,
+    31169556,
+    -1,
+    "e893042",
+    "X",
+    "ENSEMBL",
+    "exon"
+  ]],
+  "ENSEMBL:ENST00000481143.2",        // another id
+  "transcript"                        // SO term name
+ ],
+ etc
+```
+
 ### Implementation details
 
 This component makes use of three components developed by the JBrowse team:
