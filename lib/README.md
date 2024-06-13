@@ -141,6 +141,11 @@ GFF.
  etc
 ```
 
+An example of how this function is used can be found in the GenericGeneSeqPanel
+component:
+
+https://github.com/scottcain/seqpanel/blob/main/lib/src/components/GenericGeneSeqPanel.tsx
+
 ### Implementation details
 
 This component makes use of three components developed by the JBrowse team:
