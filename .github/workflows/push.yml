@@ -17,7 +17,7 @@ jobs:
       - name: Test codebase
         run: yarn test
       - name: Lint codebase
-        run: yarn lint 
+        run: yarn lint
       - name: Build lib
         working-directory: lib
         run: yarn build

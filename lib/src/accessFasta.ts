@@ -15,7 +15,6 @@ export async function accessFasta(
     fasta: fastaFilehandle,
     fai: faiFilehandle,
     gzi: gziFilehandle,
-    chunkSizeLimit: 5000000,
   });
 
   const upstreamstart = start - 499;

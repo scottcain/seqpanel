@@ -22,16 +22,16 @@ export default async function fetchTranscripts({
   gene,
 }: {
   nclistbaseurl: string;
-  fastaurl: string;
   urltemplate: string;
   refseq: string;
   start: number;
   end: number;
   gene: string;
 }): Promise<Feature[]> {
-
-  if (refseq == 'NC_045512.2') {
-    throw new Error("Unfortunately, Sequence Details doesn't yet support fetching viral sequences; sorry.");
+  if (refseq == "NC_045512.2") {
+    throw new Error(
+      "Unfortunately, Sequence Details doesn't yet support fetching viral sequences; sorry.",
+    );
   }
 
   const store = new NCList({
