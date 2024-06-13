@@ -98,7 +98,9 @@ and returns an array of JBrowse 2-style feature objects that correspond to the
 gene's subfeatures (usually transcripts and their exons, UTRs and CDS regions).
 In the console, those features look like the below, but note that they can also
 be accessed via getter functions like `transcriptArray[0].get('name')` and
-`transcriptArray[i].get('start')`.
+`transcriptArray[i].get('start')`, since the underlying JBrowse libraries handle
+the mapping between the items in this array and the attributes that came from
+GFF.
 
 ```
  [[
