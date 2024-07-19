@@ -28,8 +28,8 @@
     "src"
   ],
   "peerDependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^17.0.1 || ^18.0.0",
+    "react-dom": "^17.0.1 || ^18.0.0"
   },
   "dependencies": {
     "@gmod/indexedfasta": "^2.0.4",
