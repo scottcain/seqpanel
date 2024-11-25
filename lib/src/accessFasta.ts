@@ -17,7 +17,7 @@ export async function accessFasta(
     gzi: gziFilehandle,
   });
 
-  const upstreamstart = start - 499;
+  const upstreamstart = start - 499 < 0 ? 0 : start - 499;
   const downstreamend = end + 499;
   const seq = await t.getSequence(refseq, start, end);
   const upstream = await t.getSequence(refseq, upstreamstart, start);

@@ -8,7 +8,7 @@
   },
   "main": "dist/index.js",
   "module": "esm/index.js",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "keywords": [
     "bioinformatics",
     "gene page",
