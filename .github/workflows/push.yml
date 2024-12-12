@@ -16,11 +16,11 @@ jobs:
         uses: bahmutov/npm-install@v1
       - name: Test codebase
         run: yarn test
-      - name: Lint codebase
-        run: yarn lint
       - name: Build lib
         working-directory: lib
         run: yarn build
+      - name: Lint codebase
+        run: yarn lint
       - name: Build app
         working-directory: app
         run: yarn build

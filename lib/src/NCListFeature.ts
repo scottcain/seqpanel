@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/prefer-nullish-coalescing,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call */
 import {
   Feature,
   SimpleFeatureSerialized,
@@ -15,7 +16,6 @@ export default class NCListFeature implements Feature {
 
   private uniqueId: string;
 
-   
   constructor(
     private ncFeature: any,
     parent?: Feature,
@@ -42,11 +42,9 @@ export default class NCListFeature implements Feature {
     return mapped;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get(attrName: string): any {
     const attr = this.ncFeature.get(this.jb2TagToJb1Tag(attrName));
     if (attr && attrName === "subfeatures") {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return attr.map((subfeature: any) => new NCListFeature(subfeature, this));
     }
     return attr;

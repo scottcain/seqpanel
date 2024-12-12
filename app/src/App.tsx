@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 export default function App() {
   const [result, setResult] = useState<unknown>();
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
       try {
         const res = await fetchTranscripts({
@@ -15,7 +16,6 @@ export default function App() {
           gene: "DMD",
           urltemplate: "tracks/All_Genes/{refseq}/trackData.jsonz",
         });
-        console.log(res);
         setResult(res);
       } catch (e) {
         console.error(e);

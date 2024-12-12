@@ -134,7 +134,7 @@ export default function GenericSeqPanel({
               ref={seqPanelRef}
               model={model}
               sequence={result.sequence}
-              feature={result.feature as any}
+              feature={result.feature}
             />
           </div>
           <div className="p-2">

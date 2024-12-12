@@ -22,6 +22,7 @@ export default function GenericGeneSeqPanel(props: {
   const [model] = useState(SequenceFeatureDetailsF().create({}));
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
       try {
         const res = await transcriptList({
