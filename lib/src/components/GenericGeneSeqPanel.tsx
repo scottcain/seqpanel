@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import GenericSeqPanel from "./GenericSeqPanel";
 import transcriptList from "../fetchTranscripts";
 import { Feature } from "@jbrowse/core/util";
+import { SequenceFeatureDetailsF } from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/model";
 
 export default function GenericGeneSeqPanel(props: {
   nclistbaseurl: string;
@@ -18,8 +19,8 @@ export default function GenericGeneSeqPanel(props: {
   const [result, setResult] = useState<Feature[]>();
   const [error, setError] = useState<unknown>();
   const [transcript, setTranscript] = useState<Feature>();
-  const [mode, setMode] = useState("gene");
   const feature = transcript || result?.[0];
+  const [model] = useState(SequenceFeatureDetailsF().create({}));
 
   useEffect(() => {
     (async () => {
@@ -61,7 +62,7 @@ export default function GenericGeneSeqPanel(props: {
             ))}
           </select>
           &nbsp; Mode:
-          <select onChange={e => setMode(e.target.value)}>
+          <select onChange={e => model.setMode(e.target.value)}>
             <option value="gene">gene</option>
             <option value="cds">CDS</option>
             <option value="cdna">cDNA</option>
@@ -82,7 +83,7 @@ export default function GenericGeneSeqPanel(props: {
           </select>
         </p>
         {feature ? (
-          <GenericSeqPanel {...props} transcript={feature} mode={mode} />
+          <GenericSeqPanel {...props} transcript={feature} model={model} />
         ) : null}
       </div>
     );

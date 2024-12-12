@@ -1,10 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useState, useEffect, useRef } from "react";
-import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
+import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/SequencePanel";
 import { assembleBundle } from "../assembleBundle";
 import { Feature } from "@jbrowse/core/util";
 import copy from "copy-to-clipboard";
 import { Button, Tooltip } from "reactstrap";
+import { SequenceFeatureDetailsModel } from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/model";
 
 type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
 
@@ -12,22 +13,22 @@ export default function GenericSeqPanel({
   nclistbaseurl,
   fastaurl,
   refseq,
-  mode,
   start,
   end,
   gene,
   transcript,
   urltemplate,
+  model,
 }: {
   nclistbaseurl: string;
   fastaurl: string;
   refseq: string;
-  mode: string;
   start: number;
   end: number;
   gene: string;
   transcript: Feature;
   urltemplate: string;
+  model: SequenceFeatureDetailsModel;
 }) {
   const [result, setResult] = useState<Bundle>();
   const [error, setError] = useState<unknown>();
@@ -48,7 +49,6 @@ export default function GenericSeqPanel({
           refseq,
         });
         setResult(res);
-        //	console.log(res.sequence.seq);
       } catch (e) {
         console.error(e);
         setError(e);
@@ -128,7 +128,7 @@ export default function GenericSeqPanel({
           <div className="p-2">
             <SequencePanel
               ref={seqPanelRef}
-              mode={mode}
+              model={model}
               sequence={result.sequence}
               feature={result.feature as any}
             />

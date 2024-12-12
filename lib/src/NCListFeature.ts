@@ -81,19 +81,21 @@ export default class NCListFeature implements Feature {
   }
 
   toJSON(): SimpleFeatureSerialized {
-    const data: SimpleFeatureSerialized = { uniqueId: this.id() };
+    const data = { uniqueId: this.id(), subfeatures: [] } as Record<
+      string,
+      unknown
+    >;
     this.ncFeature.tags().forEach((tag: string) => {
       const mappedTag = this.jb1TagToJb2Tag(tag);
       const value = this.ncFeature.get(tag);
       if (mappedTag === "subfeatures") {
-        data.subfeatures = (value || []).map((f: Feature) => {
-          // note: was new NCListFeature(f, `${this.id()}-${i}`, this).toJSON()
-          return new NCListFeature(f, this).toJSON();
-        });
+        data.subfeatures = (value || []).map((f: Feature) =>
+          new NCListFeature(f, this).toJSON(),
+        );
       } else {
         data[mappedTag] = value;
       }
     });
-    return data;
+    return data as SimpleFeatureSerialized;
   }
 }

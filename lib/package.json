@@ -34,14 +34,15 @@
   "dependencies": {
     "@gmod/indexedfasta": "^2.0.4",
     "@gmod/nclist": "^1.0.0",
-    "@jbrowse/core": "2.4.2",
-    "generic-filehandle": "^3.0.1",
-    "mobx": "^6.8.0",
-    "mobx-state-tree": "^5.1.8",
+    "@jbrowse/core": "2.18.0",
     "copy-to-clipboard": "^3.3.3",
-    "reactstrap": "^9.2.2",
+    "generic-filehandle": "^3.2.0",
+    "mobx": "^6.13.5",
+    "mobx-react": "^9.2.0",
+    "mobx-state-tree": "^5.1.8",
+    "reactstrap": "^9.2.3",
     "rxjs": "^7.8.0",
-    "tslib": "^2.1.0"
+    "tslib": "^2.8.1"
   },
   "scripts": {
     "build:esm": "tsc --target es2018 --outDir esm",
