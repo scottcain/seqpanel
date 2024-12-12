@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 import { useState, useEffect } from "react";
 import GenericSeqPanel from "./GenericSeqPanel";
 import transcriptList from "../fetchTranscripts";
@@ -52,7 +52,7 @@ export default function GenericGeneSeqPanel(props: {
           Transcript:
           <select
             onChange={e =>
-              setTranscript(result.find(r => r.id() === e.target.value))
+              { setTranscript(result.find(r => r.id() === e.target.value)); }
             }
           >
             {result.map(r => (
@@ -62,7 +62,7 @@ export default function GenericGeneSeqPanel(props: {
             ))}
           </select>
           &nbsp; Mode:
-          <select onChange={e => model.setMode(e.target.value)}>
+          <select onChange={e => { model.setMode(e.target.value); }}>
             <option value="gene">gene</option>
             <option value="cds">CDS</option>
             <option value="cdna">cDNA</option>

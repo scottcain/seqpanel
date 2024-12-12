@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 import { useState, useEffect, useRef } from "react";
 import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/SequencePanel";
 import { assembleBundle } from "../assembleBundle";
@@ -82,7 +82,7 @@ export default function GenericSeqPanel({
               if (ref) {
                 copy(ref.textContent || "", { format: "text/plain" });
                 setCopied(true);
-                setTimeout(() => setCopied(false), 1000);
+                setTimeout(() => { setCopied(false); }, 1000);
               }
             }}
           >
@@ -101,7 +101,7 @@ export default function GenericSeqPanel({
               }
               copy(ref.innerHTML, { format: "text/html" });
               setCopiedHtml(true);
-              setTimeout(() => setCopiedHtml(false), 1000);
+              setTimeout(() => { setCopiedHtml(false); }, 1000);
             }}
           >
             {copiedHtml ? "Copied to clipboard!" : "Copy highlighted fasta"}
