@@ -24,8 +24,8 @@ export async function accessFasta(
   const downstream = await t.getSequence(refseq, end, downstreamend);
 
   return {
-    seq: seq || "",
-    upstream: upstream || "",
-    downstream: downstream || "",
+    seq: seq ?? "",
+    upstream: upstream ?? "",
+    downstream: downstream ?? "",
   };
 }

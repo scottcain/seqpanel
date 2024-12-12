@@ -6,7 +6,13 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: ["**/build/**/*", "**/dist/**/*", "**/esm/**/*", "**/public/**/*"],
+    ignores: [
+      "**/build/**/*",
+      "**/dist/**/*",
+      "**/esm/**/*",
+      "**/public/**/*",
+      "eslint.config.mjs",
+    ],
   },
   {
     languageOptions: {
@@ -42,6 +48,11 @@ export default tseslint.config(
   },
   {
     rules: {
+      "@typescript-eslint/ban-ts-comment": "off",
+      "@typescript-eslint/no-base-to-string": "off",
+      "@typescript-eslint/restrict-template-expressions": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "react/react-in-jsx-scope": "off",
       "no-console": [
         "warn",
         {

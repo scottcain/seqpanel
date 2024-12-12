@@ -45,8 +45,9 @@ export default async function fetchTranscripts({
     start: start,
     end: end,
   })) {
-    if (feature.get("name") === gene) {
-      return feature.get("subfeatures");
+    const f = feature as Feature;
+    if (f.get("name") === gene) {
+      return f.get("subfeatures") ?? [];
     }
   }
   return [];

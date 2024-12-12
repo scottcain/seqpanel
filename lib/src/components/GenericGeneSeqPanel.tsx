@@ -1,4 +1,3 @@
- 
 import { useState, useEffect } from "react";
 import GenericSeqPanel from "./GenericSeqPanel";
 import transcriptList from "../fetchTranscripts";
@@ -19,7 +18,7 @@ export default function GenericGeneSeqPanel(props: {
   const [result, setResult] = useState<Feature[]>();
   const [error, setError] = useState<unknown>();
   const [transcript, setTranscript] = useState<Feature>();
-  const feature = transcript || result?.[0];
+  const feature = transcript ?? result?.[0];
   const [model] = useState(SequenceFeatureDetailsF().create({}));
 
   useEffect(() => {
@@ -51,9 +50,9 @@ export default function GenericGeneSeqPanel(props: {
         <p>
           Transcript:
           <select
-            onChange={e =>
-              { setTranscript(result.find(r => r.id() === e.target.value)); }
-            }
+            onChange={e => {
+              setTranscript(result.find(r => r.id() === e.target.value));
+            }}
           >
             {result.map(r => (
               <option key={r.id()} value={r.id()}>
@@ -62,7 +61,11 @@ export default function GenericGeneSeqPanel(props: {
             ))}
           </select>
           &nbsp; Mode:
-          <select onChange={e => { model.setMode(e.target.value); }}>
+          <select
+            onChange={e => {
+              model.setMode(e.target.value);
+            }}
+          >
             <option value="gene">gene</option>
             <option value="cds">CDS</option>
             <option value="cdna">cDNA</option>
