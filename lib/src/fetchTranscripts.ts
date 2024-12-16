@@ -1,4 +1,4 @@
-import { RemoteFile } from "generic-filehandle";
+import { RemoteFile } from "generic-filehandle2";
 import NCList from "@gmod/nclist";
 import { Feature } from "@jbrowse/core/util";
 
@@ -28,6 +28,7 @@ export default async function fetchTranscripts({
   end: number;
   gene: string;
 }): Promise<Feature[]> {
+  console.log({ refseq });
   if (refseq == "NC_045512.2") {
     throw new Error(
       "Unfortunately, Sequence Details doesn't yet support fetching viral sequences; sorry.",

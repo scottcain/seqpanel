@@ -1,4 +1,4 @@
-import { RemoteFile } from "generic-filehandle";
+import { RemoteFile } from "generic-filehandle2";
 import { BgzipIndexedFasta } from "@gmod/indexedfasta";
 
 export async function accessFasta(

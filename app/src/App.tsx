@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 
 export default function App() {
   const [result, setResult] = useState<unknown>();
+  const [error, setError] = useState<unknown>();
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
       try {
+        setError(undefined);
         const res = await fetchTranscripts({
           nclistbaseurl:
             "https://s3.amazonaws.com/agrjbrowse/docker/7.0.0/human/",
@@ -18,6 +20,7 @@ export default function App() {
         });
         setResult(res);
       } catch (e) {
+        setError(e);
         console.error(e);
       }
     })();
@@ -25,7 +28,9 @@ export default function App() {
 
   return (
     <div>
-      {!result ? (
+      {error ? (
+        <div style={{ color: "red" }}>{`${error}`}</div>
+      ) : !result ? (
         <div>Loading example of the fetchTranscripts function...</div>
       ) : (
         <div>

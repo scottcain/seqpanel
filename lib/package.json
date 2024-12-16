@@ -32,11 +32,11 @@
     "react-dom": "^17.0.1 || ^18.0.0 || ^19.0.0"
   },
   "dependencies": {
-    "@gmod/indexedfasta": "^2.0.4",
-    "@gmod/nclist": "^1.0.0",
+    "@gmod/indexedfasta": "^3.0.1",
+    "@gmod/nclist": "^2.0.0",
     "@jbrowse/core": "2.18.0",
     "copy-to-clipboard": "^3.3.3",
-    "generic-filehandle": "^3.2.0",
+    "generic-filehandle2": "^1.0.0",
     "mobx": "^6.13.5",
     "mobx-react": "^9.2.0",
     "mobx-state-tree": "^5.1.8",

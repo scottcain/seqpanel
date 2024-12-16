@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { observer } from "mobx-react";
 import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/SequencePanel";
 import { assembleBundle } from "../assembleBundle";
 import { Feature } from "@jbrowse/core/util";
@@ -8,7 +9,7 @@ import { SequenceFeatureDetailsModel } from "@jbrowse/core/BaseFeatureWidget/Seq
 
 type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
 
-export default function GenericSeqPanel({
+const GenericSeqPanel = observer(function ({
   nclistbaseurl,
   fastaurl,
   refseq,
@@ -40,6 +41,7 @@ export default function GenericSeqPanel({
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
       try {
+        setError(undefined);
         const res = await assembleBundle({
           nclistbaseurl,
           urltemplate,
@@ -180,4 +182,6 @@ export default function GenericSeqPanel({
       </>
     );
   }
-}
+});
+
+export default GenericSeqPanel;

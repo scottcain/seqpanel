@@ -3,8 +3,17 @@ import GenericSeqPanel from "./GenericSeqPanel";
 import transcriptList from "../fetchTranscripts";
 import { Feature } from "@jbrowse/core/util";
 import { SequenceFeatureDetailsF } from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/model";
+import { observer } from "mobx-react";
 
-export default function GenericGeneSeqPanel(props: {
+const GenericGeneSeqPanel = observer(function ({
+  nclistbaseurl,
+  fastaurl,
+  refseq,
+  start,
+  end,
+  gene,
+  urltemplate,
+}: {
   nclistbaseurl: string;
   fastaurl: string;
   refseq: string;
@@ -13,8 +22,6 @@ export default function GenericGeneSeqPanel(props: {
   gene: string;
   urltemplate: string;
 }) {
-  const { nclistbaseurl, fastaurl, refseq, start, end, gene, urltemplate } =
-    props;
   const [result, setResult] = useState<Feature[]>();
   const [error, setError] = useState<unknown>();
   const [transcript, setTranscript] = useState<Feature>();
@@ -25,6 +32,7 @@ export default function GenericGeneSeqPanel(props: {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
       try {
+        setError(undefined);
         const res = await transcriptList({
           nclistbaseurl,
           refseq,
@@ -87,9 +95,21 @@ export default function GenericGeneSeqPanel(props: {
           </select>
         </p>
         {feature ? (
-          <GenericSeqPanel {...props} transcript={feature} model={model} />
+          <GenericSeqPanel
+            refseq={refseq}
+            start={start}
+            end={end}
+            fastaurl={fastaurl}
+            gene={gene}
+            urltemplate={urltemplate}
+            nclistbaseurl={nclistbaseurl}
+            transcript={feature}
+            model={model}
+          />
         ) : null}
       </div>
     );
   }
-}
+});
+
+export default GenericGeneSeqPanel;

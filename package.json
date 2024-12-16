@@ -7,7 +7,8 @@
   ],
   "scripts": {
     "test": "vitest",
-    "lint": "eslint"
+    "lint": "eslint",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
@@ -15,9 +16,9 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/node": "^20.14.2",
     "@types/node-fetch": "^2.6.12",
-    "@typescript-eslint/eslint-plugin": "^7.13.0",
-    "@typescript-eslint/parser": "^7.13.0",
-    "eslint": "^9.16.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "eslint": "^9.17.0",
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.16",
