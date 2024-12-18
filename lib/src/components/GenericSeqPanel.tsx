@@ -154,8 +154,10 @@ const GenericSeqPanel = observer(function ({
               assembly.
             </p>
             <p style={{ fontSize: "small" }}>
-              &nbsp;Lowercase bases have been soft masked by NCBI Genomes to
-              mark repetitive sequences.
+              &nbsp;Lower case bases for noncoding transcripts indicate mature
+              transcript sequence (i.e., spliced exons when applicable) and for
+              coding transcripts indicate mature transcript's coding region
+              (i.e., CDS).
             </p>
           </div>
         </div>
