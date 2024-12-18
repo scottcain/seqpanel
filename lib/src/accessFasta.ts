@@ -1,4 +1,4 @@
-import { RemoteFile } from "generic-filehandle";
+import { RemoteFile } from "generic-filehandle2";
 import { BgzipIndexedFasta } from "@gmod/indexedfasta";
 
 export async function accessFasta(
@@ -6,6 +6,7 @@ export async function accessFasta(
   start: number,
   end: number,
   fastaURL: string,
+  upDownBp: number,
 ) {
   const fastaFilehandle = new RemoteFile(fastaURL);
   const faiFilehandle = new RemoteFile(fastaURL + ".fai");
@@ -17,15 +18,15 @@ export async function accessFasta(
     gzi: gziFilehandle,
   });
 
-  const upstreamstart = start - 499 < 0 ? 0 : start - 499;
-  const downstreamend = end + 499;
+  const upstreamstart = Math.max(0, start - upDownBp);
+  const downstreamend = end + upDownBp;
   const seq = await t.getSequence(refseq, start, end);
   const upstream = await t.getSequence(refseq, upstreamstart, start);
   const downstream = await t.getSequence(refseq, end, downstreamend);
 
   return {
-    seq: seq || "",
-    upstream: upstream || "",
-    downstream: downstream || "",
+    seq: seq ?? "",
+    upstream: upstream ?? "",
+    downstream: downstream ?? "",
   };
 }

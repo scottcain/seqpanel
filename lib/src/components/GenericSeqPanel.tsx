@@ -1,33 +1,22 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useState, useEffect, useRef } from "react";
-import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequencePanel";
+import { observer } from "mobx-react";
+import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/SequencePanel";
 import { assembleBundle } from "../assembleBundle";
-import { Feature } from "@jbrowse/core/util";
+import { SimpleFeature } from "@jbrowse/core/util";
 import copy from "copy-to-clipboard";
 import { Button, Tooltip } from "reactstrap";
+import { SequenceFeatureDetailsModel } from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/model";
 
 type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
 
-export default function GenericSeqPanel({
-  nclistbaseurl,
+const GenericSeqPanel = observer(function ({
   fastaurl,
   refseq,
-  mode,
-  start,
-  end,
-  gene,
-  transcript,
-  urltemplate,
+  model,
 }: {
-  nclistbaseurl: string;
   fastaurl: string;
   refseq: string;
-  mode: string;
-  start: number;
-  end: number;
-  gene: string;
-  transcript: Feature;
-  urltemplate: string;
+  model: SequenceFeatureDetailsModel;
 }) {
   const [result, setResult] = useState<Bundle>();
   const [error, setError] = useState<unknown>();
@@ -35,35 +24,28 @@ export default function GenericSeqPanel({
   const [copied, setCopied] = useState(false);
   const [copiedHtml, setCopiedHtml] = useState(false);
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const { feature, intronBp, upDownBp } = model;
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
       try {
-        const res = await assembleBundle({
-          nclistbaseurl,
-          urltemplate,
-          fastaurl,
-          gene,
-          transcript,
-          refseq,
-        });
-        setResult(res);
-        //	console.log(res.sequence.seq);
+        setError(undefined);
+        if (feature) {
+          const res = await assembleBundle({
+            fastaurl,
+            transcript: new SimpleFeature(feature),
+            upDownBp,
+            refseq,
+          });
+          setResult(res);
+        }
       } catch (e) {
         console.error(e);
         setError(e);
       }
     })();
-  }, [
-    refseq,
-    transcript,
-    gene,
-    start,
-    end,
-    fastaurl,
-    urltemplate,
-    nclistbaseurl,
-  ]);
+  }, [intronBp, fastaurl, refseq, upDownBp, feature]);
 
   if (error) {
     return <div style={{ color: "red" }}>{`${error}`}</div>;
@@ -80,9 +62,11 @@ export default function GenericSeqPanel({
             onClick={() => {
               const ref = seqPanelRef.current;
               if (ref) {
-                copy(ref.textContent || "", { format: "text/plain" });
+                copy(ref.textContent ?? "", { format: "text/plain" });
                 setCopied(true);
-                setTimeout(() => setCopied(false), 1000);
+                setTimeout(() => {
+                  setCopied(false);
+                }, 1000);
               }
             }}
           >
@@ -101,7 +85,9 @@ export default function GenericSeqPanel({
               }
               copy(ref.innerHTML, { format: "text/html" });
               setCopiedHtml(true);
-              setTimeout(() => setCopiedHtml(false), 1000);
+              setTimeout(() => {
+                setCopiedHtml(false);
+              }, 1000);
             }}
           >
             {copiedHtml ? "Copied to clipboard!" : "Copy highlighted fasta"}
@@ -128,9 +114,9 @@ export default function GenericSeqPanel({
           <div className="p-2">
             <SequencePanel
               ref={seqPanelRef}
-              mode={mode}
+              model={model}
               sequence={result.sequence}
-              feature={result.feature as any}
+              feature={result.feature}
             />
           </div>
           <div className="p-2">
@@ -176,4 +162,6 @@ export default function GenericSeqPanel({
       </>
     );
   }
-}
+});
+
+export default GenericSeqPanel;

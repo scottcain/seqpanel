@@ -6,30 +6,29 @@
     "app"
   ],
   "scripts": {
-    "test": "jest",
-    "lint": "eslint lib app"
+    "test": "vitest",
+    "lint": "eslint",
+    "format": "prettier --write ."
   },
   "devDependencies": {
-    "@testing-library/dom": "^10.1.0",
-    "@testing-library/jest-dom": "^6.4.6",
-    "@testing-library/react": "^16.0.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.4.3",
-    "@types/jest": "^29.5.1",
     "@types/node": "^20.14.2",
-    "@types/node-fetch": "^2.6.11",
-    "@typescript-eslint/eslint-plugin": "^7.13.0",
-    "@typescript-eslint/parser": "^7.13.0",
-    "eslint": "^8.0.0",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.7",
-    "eslint-plugin-unicorn": "^53.0.0",
-    "jest": "^29.5.0",
-    "jest-environment-jsdom": "^29.5.0",
+    "@types/node-fetch": "^2.6.12",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "eslint": "^9.17.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "eslint-plugin-unicorn": "^56.0.1",
+    "jsdom": "^25.0.1",
     "node-fetch": "^2.0.0",
-    "prettier": "^3.3.2",
-    "rimraf": "^5.0.0",
-    "ts-jest": "^29.1.0",
-    "typescript": "^5.0.4"
+    "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.0",
+    "vitest": "^2.1.8"
   }
 }

@@ -1,11 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from "react";
+/**
+ * @vitest-environment jsdom
+ */
+
+import { test } from "vitest";
 import { render } from "@testing-library/react";
 import GenericGeneSeqPanel from "./components/GenericGeneSeqPanel";
-import fetch from "node-fetch";
-
-// @ts-expect-error
-globalThis.fetch = fetch;
 
 test("expect protein rendering", async () => {
   const { findByText } = render(
