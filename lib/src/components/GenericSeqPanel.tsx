@@ -10,22 +10,12 @@ import { SequenceFeatureDetailsModel } from "@jbrowse/core/BaseFeatureWidget/Seq
 type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
 
 const GenericSeqPanel = observer(function ({
-  nclistbaseurl,
   fastaurl,
   refseq,
-  start,
-  end,
-  gene,
-  urltemplate,
   model,
 }: {
-  nclistbaseurl: string;
   fastaurl: string;
   refseq: string;
-  start: number;
-  end: number;
-  gene: string;
-  urltemplate: string;
   model: SequenceFeatureDetailsModel;
 }) {
   const [result, setResult] = useState<Bundle>();
@@ -55,18 +45,7 @@ const GenericSeqPanel = observer(function ({
         setError(e);
       }
     })();
-  }, [
-    refseq,
-    feature,
-    upDownBp,
-    intronBp,
-    gene,
-    start,
-    end,
-    fastaurl,
-    urltemplate,
-    nclistbaseurl,
-  ]);
+  }, [intronBp, fastaurl, refseq, upDownBp, feature]);
 
   if (error) {
     return <div style={{ color: "red" }}>{`${error}`}</div>;

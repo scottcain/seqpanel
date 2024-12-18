@@ -32,11 +32,13 @@ const GenericGeneSeqPanel = observer(function ({
 }) {
   const [result, setResult] = useState<Feature[]>();
   const [error, setError] = useState<unknown>();
-  const [{ sequenceFeatureDetails }] = useState(() =>
-    Model.create({
+  const [{ sequenceFeatureDetails }] = useState(() => {
+    const model = Model.create({
       sequenceFeatureDetails: {},
-    }),
-  );
+    });
+    model.sequenceFeatureDetails.setUpDownBp(500);
+    return model;
+  });
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -100,12 +102,7 @@ const GenericGeneSeqPanel = observer(function ({
         {sequenceFeatureDetails.feature ? (
           <GenericSeqPanel
             refseq={refseq}
-            start={start}
-            end={end}
             fastaurl={fastaurl}
-            gene={gene}
-            urltemplate={urltemplate}
-            nclistbaseurl={nclistbaseurl}
             model={sequenceFeatureDetails}
           />
         ) : null}
