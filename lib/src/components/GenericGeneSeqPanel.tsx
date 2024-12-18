@@ -3,7 +3,14 @@ import GenericSeqPanel from "./GenericSeqPanel";
 import transcriptList from "../fetchTranscripts";
 import { Feature } from "@jbrowse/core/util";
 import { SequenceFeatureDetailsF } from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/model";
+import Selector from "./Selector";
 import { observer } from "mobx-react";
+import { types } from "mobx-state-tree";
+
+// blank parent Model to allow afterAttach autorun to execute
+const Model = types.model({
+  sequenceFeatureDetails: SequenceFeatureDetailsF(),
+});
 
 const GenericGeneSeqPanel = observer(function ({
   nclistbaseurl,
@@ -26,7 +33,13 @@ const GenericGeneSeqPanel = observer(function ({
   const [error, setError] = useState<unknown>();
   const [transcript, setTranscript] = useState<Feature>();
   const feature = transcript ?? result?.[0];
-  const [model] = useState(SequenceFeatureDetailsF().create({}));
+  const [{ sequenceFeatureDetails }] = useState(() =>
+    Model.create({
+      sequenceFeatureDetails: {},
+    }),
+  );
+  const { mode } = sequenceFeatureDetails;
+  console.log({ mode, feature });
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -48,6 +61,13 @@ const GenericGeneSeqPanel = observer(function ({
       }
     })();
   }, [nclistbaseurl, fastaurl, refseq, start, end, gene, urltemplate]);
+  useEffect(() => {
+    console.log({ feature });
+    if (feature) {
+      // @ts-expect-error
+      sequenceFeatureDetails.setFeature(feature);
+    }
+  }, [feature]);
 
   if (error) {
     return <div style={{ color: "red" }}>{`${error}`}</div>;
@@ -56,44 +76,8 @@ const GenericGeneSeqPanel = observer(function ({
   } else {
     return (
       <div className="GenericGeneSeqPanel">
-        <p>
-          Transcript:
-          <select
-            onChange={e => {
-              setTranscript(result.find(r => r.id() === e.target.value));
-            }}
-          >
-            {result.map(r => (
-              <option key={r.id()} value={r.id()}>
-                {r.get("name")}
-              </option>
-            ))}
-          </select>
-          &nbsp; Mode:
-          <select
-            onChange={e => {
-              model.setMode(e.target.value);
-            }}
-          >
-            <option value="gene">gene</option>
-            <option value="cds">CDS</option>
-            <option value="cdna">cDNA</option>
-            <option value="protein">protein</option>
-            <option value="genomic">genomic</option>
-            <option value="genomic_sequence_updown">
-              genomic +500bp up and down stream
-            </option>
-            <option value="gene_collapsed_intron">
-              gene with collapsed introns
-            </option>
-            <option value="gene_updownstream">
-              gene with 500bp up and down stream
-            </option>
-            <option value="gene_updownstream_collapsed_intron">
-              gene with 500bp up and down stream and collapsed introns
-            </option>
-          </select>
-        </p>
+        <Selector model={sequenceFeatureDetails} />
+
         {feature ? (
           <GenericSeqPanel
             refseq={refseq}
@@ -104,7 +88,7 @@ const GenericGeneSeqPanel = observer(function ({
             urltemplate={urltemplate}
             nclistbaseurl={nclistbaseurl}
             transcript={feature}
-            model={model}
+            model={sequenceFeatureDetails}
           />
         ) : null}
       </div>

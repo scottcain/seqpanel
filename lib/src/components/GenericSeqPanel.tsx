@@ -36,6 +36,7 @@ const GenericSeqPanel = observer(function ({
   const [copied, setCopied] = useState(false);
   const [copiedHtml, setCopiedHtml] = useState(false);
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  console.log({ result });
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
