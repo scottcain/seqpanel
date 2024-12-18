@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
 import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/SequencePanel";
 import { assembleBundle } from "../assembleBundle";
-import { Feature } from "@jbrowse/core/util";
+import { SimpleFeature } from "@jbrowse/core/util";
 import copy from "copy-to-clipboard";
 import { Button, Tooltip } from "reactstrap";
 import { SequenceFeatureDetailsModel } from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/model";
@@ -16,7 +16,6 @@ const GenericSeqPanel = observer(function ({
   start,
   end,
   gene,
-  transcript,
   urltemplate,
   model,
 }: {
@@ -26,7 +25,6 @@ const GenericSeqPanel = observer(function ({
   start: number;
   end: number;
   gene: string;
-  transcript: Feature;
   urltemplate: string;
   model: SequenceFeatureDetailsModel;
 }) {
@@ -36,22 +34,22 @@ const GenericSeqPanel = observer(function ({
   const [copied, setCopied] = useState(false);
   const [copiedHtml, setCopiedHtml] = useState(false);
   const [tooltipOpen, setTooltipOpen] = useState(false);
-  console.log({ result });
+  const { feature, intronBp, upDownBp } = model;
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
       try {
         setError(undefined);
-        const res = await assembleBundle({
-          nclistbaseurl,
-          urltemplate,
-          fastaurl,
-          gene,
-          transcript,
-          refseq,
-        });
-        setResult(res);
+        if (feature) {
+          const res = await assembleBundle({
+            fastaurl,
+            transcript: new SimpleFeature(feature),
+            upDownBp,
+            refseq,
+          });
+          setResult(res);
+        }
       } catch (e) {
         console.error(e);
         setError(e);
@@ -59,7 +57,9 @@ const GenericSeqPanel = observer(function ({
     })();
   }, [
     refseq,
-    transcript,
+    feature,
+    upDownBp,
+    intronBp,
     gene,
     start,
     end,

@@ -28,7 +28,6 @@ export default async function fetchTranscripts({
   end: number;
   gene: string;
 }): Promise<Feature[]> {
-  console.log({ refseq });
   if (refseq == "NC_045512.2") {
     throw new Error(
       "Unfortunately, Sequence Details doesn't yet support fetching viral sequences; sorry.",

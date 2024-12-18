@@ -6,6 +6,7 @@ import { SequenceFeatureDetailsF } from "@jbrowse/core/BaseFeatureWidget/Sequenc
 import Selector from "./Selector";
 import { observer } from "mobx-react";
 import { types } from "mobx-state-tree";
+import NCListFeature from "../NCListFeature";
 
 // blank parent Model to allow afterAttach autorun to execute
 const Model = types.model({
@@ -31,15 +32,11 @@ const GenericGeneSeqPanel = observer(function ({
 }) {
   const [result, setResult] = useState<Feature[]>();
   const [error, setError] = useState<unknown>();
-  const [transcript, setTranscript] = useState<Feature>();
-  const feature = transcript ?? result?.[0];
   const [{ sequenceFeatureDetails }] = useState(() =>
     Model.create({
       sequenceFeatureDetails: {},
     }),
   );
-  const { mode } = sequenceFeatureDetails;
-  console.log({ mode, feature });
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -54,20 +51,24 @@ const GenericGeneSeqPanel = observer(function ({
           gene,
           urltemplate,
         });
-        setResult(res);
+        const r = res.map(r => new NCListFeature(r));
+        setResult(r);
+        sequenceFeatureDetails.setFeature(r[0]?.toJSON());
       } catch (e) {
         console.error(e);
         setError(e);
       }
     })();
-  }, [nclistbaseurl, fastaurl, refseq, start, end, gene, urltemplate]);
-  useEffect(() => {
-    console.log({ feature });
-    if (feature) {
-      // @ts-expect-error
-      sequenceFeatureDetails.setFeature(feature);
-    }
-  }, [feature]);
+  }, [
+    sequenceFeatureDetails,
+    nclistbaseurl,
+    fastaurl,
+    refseq,
+    start,
+    end,
+    gene,
+    urltemplate,
+  ]);
 
   if (error) {
     return <div style={{ color: "red" }}>{`${error}`}</div>;
@@ -76,9 +77,27 @@ const GenericGeneSeqPanel = observer(function ({
   } else {
     return (
       <div className="GenericGeneSeqPanel">
-        <Selector model={sequenceFeatureDetails} />
+        <div>
+          Transcript:
+          <select
+            value={sequenceFeatureDetails.feature?.uniqueId}
+            onChange={e => {
+              sequenceFeatureDetails.setFeature(
+                // @ts-expect-error
+                result.find(r => r.id() === e.target.value)?.toJSON(),
+              );
+            }}
+          >
+            {result.map(r => (
+              <option key={r.id()} value={r.id()}>
+                {r.get("name")}
+              </option>
+            ))}
+          </select>
+          <Selector model={sequenceFeatureDetails} />
+        </div>
 
-        {feature ? (
+        {sequenceFeatureDetails.feature ? (
           <GenericSeqPanel
             refseq={refseq}
             start={start}
@@ -87,7 +106,6 @@ const GenericGeneSeqPanel = observer(function ({
             gene={gene}
             urltemplate={urltemplate}
             nclistbaseurl={nclistbaseurl}
-            transcript={feature}
             model={sequenceFeatureDetails}
           />
         ) : null}

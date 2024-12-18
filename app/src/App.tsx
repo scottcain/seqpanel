@@ -1,4 +1,4 @@
-import { GenericGeneSeqPanel, fetchTranscripts } from "generic-sequence-panel";
+import { GenericGeneSeqPanel } from "generic-sequence-panel";
 
 export default function App() {
   return (
