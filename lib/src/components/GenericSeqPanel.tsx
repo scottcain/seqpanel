@@ -154,7 +154,7 @@ const GenericSeqPanel = observer(function ({
               assembly.
             </p>
             <p style={{ fontSize: "small" }}>
-              &nbsp;Lower case bases for noncoding transcripts indicate mature
+              &nbsp;Upper case bases for noncoding transcripts indicate mature
               transcript sequence (i.e., spliced exons when applicable) and for
               coding transcripts indicate mature transcript's coding region
               (i.e., CDS).
