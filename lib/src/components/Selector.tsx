@@ -9,7 +9,8 @@ const Selector = observer(function ({
   const { intronBp, upDownBp, mode, hasCDS, hasExonOrCDS } = model;
 
   return (
-    <div>
+    <span>
+      Mode:{" "}
       <select
         value={mode}
         onChange={event => {
@@ -68,7 +69,7 @@ const Selector = observer(function ({
           </option>
         ))}
       </select>
-    </div>
+    </span>
   );
 });
 

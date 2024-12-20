@@ -96,6 +96,7 @@ const GenericGeneSeqPanel = observer(function ({
               </option>
             ))}
           </select>
+          &nbsp;
           <Selector model={sequenceFeatureDetails} />
         </div>
 
