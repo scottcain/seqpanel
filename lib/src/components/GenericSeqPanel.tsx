@@ -156,7 +156,7 @@ const GenericSeqPanel = observer(function ({
             <p style={{ fontSize: "small" }}>
               &nbsp;Upper case bases for noncoding transcripts indicate mature
               transcript sequence (i.e., spliced exons when applicable) and for
-              coding transcripts indicate mature transcript's coding region
+              coding transcripts indicate mature transcript&apos;s coding region
               (i.e., CDS).
             </p>
           </div>
