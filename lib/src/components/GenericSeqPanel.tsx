@@ -4,7 +4,9 @@ import SequencePanel from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetail
 import { assembleBundle } from "../assembleBundle";
 import { SimpleFeature } from "@jbrowse/core/util";
 import copy from "copy-to-clipboard";
-import { Button, Tooltip } from "reactstrap";
+import Button from 'react-bootstrap/Button';
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 import { SequenceFeatureDetailsModel } from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/model";
 
 type Bundle = Awaited<ReturnType<typeof assembleBundle>>;
@@ -23,8 +25,18 @@ const GenericSeqPanel = observer(function ({
   const seqPanelRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
   const [copiedHtml, setCopiedHtml] = useState(false);
-  const [tooltipOpen, setTooltipOpen] = useState(false);
   const { feature, intronBp, upDownBp } = model;
+
+  const copyHighlightedTooltip = (props: any) => (  // eslint-disable-line @typescript-eslint/no-explicit-any
+    <Tooltip id="copyHightlightedTooltip" {...props}>
+      <span style={{ fontSize: "small" }}>
+        The ‘Copy with highlights’ function retains the colors from the
+        sequence panel
+        <br /> but cannot be pasted into some programs like notepad that
+        only expect plain text.
+      </span>
+    </Tooltip>
+  );
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -56,9 +68,8 @@ const GenericSeqPanel = observer(function ({
       <>
         <p>
           <Button
-            color="primary"
+            variant="primary"
             className="align-baseline"
-            variant="contained"
             onClick={() => {
               const ref = seqPanelRef.current;
               if (ref) {
@@ -73,43 +84,31 @@ const GenericSeqPanel = observer(function ({
             {copied ? "Copied to clipboard!" : "Copy plain fasta"}
           </Button>
           &nbsp;
-          <Button
-            color="primary"
-            className="align-baseline"
-            id="CopyHighlightedButton"
-            variant="contained"
-            onClick={() => {
-              const ref = seqPanelRef.current;
-              if (!ref) {
-                return;
-              }
-              copy(ref.innerHTML, { format: "text/html" });
-              setCopiedHtml(true);
-              setTimeout(() => {
-                setCopiedHtml(false);
-              }, 1000);
-            }}
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 250, hide: 250 }}
+            overlay={copyHighlightedTooltip}
           >
-            {copiedHtml ? "Copied to clipboard!" : "Copy highlighted fasta"}
-          </Button>
+            <Button
+              variant="primary"
+              className="align-baseline"
+              id="CopyHighlightedButton"
+              onClick={() => {
+                const ref = seqPanelRef.current;
+                if (!ref) {
+                  return;
+                }
+                copy(ref.innerHTML, { format: "text/html" });
+                setCopiedHtml(true);
+                setTimeout(() => {
+                  setCopiedHtml(false);
+                }, 1000);
+              }}
+            >
+              {copiedHtml ? "Copied to clipboard!" : "Copy highlighted fasta"}
+            </Button>
+          </OverlayTrigger>
         </p>
-        <Tooltip
-          target="CopyHighlightedButton"
-          isOpen={tooltipOpen}
-          placement="right"
-          toggle={() => {
-            setTooltipOpen(!tooltipOpen);
-          }}
-        >
-          {
-            <span style={{ fontSize: "small" }}>
-              The ‘Copy with highlights’ function retains the colors from the
-              sequence panel
-              <br /> but cannot be pasted into some programs like notepad that
-              only expect plain text.
-            </span>
-          }
-        </Tooltip>
         <div style={{ display: "flex" }}>
           <div className="p-2">
             <SequencePanel
@@ -156,7 +155,7 @@ const GenericSeqPanel = observer(function ({
             <p style={{ fontSize: "small" }}>
               &nbsp;Upper case bases for noncoding transcripts indicate mature
               transcript sequence (i.e., spliced exons when applicable) and for
-              coding transcripts indicate mature transcript's coding region
+              coding transcripts indicate mature transcript&apos;s coding region
               (i.e., CDS).
             </p>
           </div>
