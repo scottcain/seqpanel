@@ -73,7 +73,7 @@ const GenericGeneSeqPanel = observer(function ({
   ]);
 
   if (error) {
-    return <div style={{ color: "red" }}>{`${error}`}</div>;
+    return null;
   } else if (!result) {
     return <div>Loading...</div>;
   } else {
