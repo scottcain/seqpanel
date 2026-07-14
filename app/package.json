@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "buffer": "^6.0.3",
-    "generic-sequence-panel": "^1.4.0",
+    "generic-sequence-panel": "^2.0.0",
     "gh-pages": "^6.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
