@@ -73,7 +73,7 @@ const GenericSeqPanel = observer(function ({
             onClick={() => {
               const ref = seqPanelRef.current;
               if (ref) {
-                copy(ref.textContent ?? "", { format: "text/plain" });
+                copy(ref.textContent, { format: "text/plain" });
                 setCopied(true);
                 setTimeout(() => {
                   setCopied(false);
