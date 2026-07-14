@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import GenericSeqPanel from "./GenericSeqPanel";
 import transcriptList from "../fetchTranscripts";
+import fetchTranscriptsTabix from "../fetchTranscriptsTabix";
 import { Feature } from "@jbrowse/core/util";
 import { SequenceFeatureDetailsF } from "@jbrowse/core/BaseFeatureWidget/SequenceFeatureDetails/model";
 import Selector from "./Selector";
@@ -14,6 +15,8 @@ const Model = types.model({
 });
 
 const GenericGeneSeqPanel = observer(function ({
+  adapterType = "tabix",
+  gffurl,
   nclistbaseurl,
   fastaurl,
   refseq,
@@ -22,13 +25,15 @@ const GenericGeneSeqPanel = observer(function ({
   gene,
   urltemplate,
 }: {
-  nclistbaseurl: string;
+  adapterType?: "tabix" | "nclist";
+  gffurl?: string;
+  nclistbaseurl?: string;
   fastaurl: string;
   refseq: string;
   start: number;
   end: number;
   gene: string;
-  urltemplate: string;
+  urltemplate?: string;
 }) {
   const [result, setResult] = useState<Feature[]>();
   const [error, setError] = useState<unknown>();
@@ -45,15 +50,26 @@ const GenericGeneSeqPanel = observer(function ({
     (async () => {
       try {
         setError(undefined);
-        const res = await transcriptList({
-          nclistbaseurl,
-          refseq,
-          start,
-          end,
-          gene,
-          urltemplate,
-        });
-        const r = res.map(r => new NCListFeature(r));
+        let r: Feature[];
+        if (adapterType === "nclist") {
+          const res = await transcriptList({
+            nclistbaseurl: nclistbaseurl ?? "",
+            refseq,
+            start,
+            end,
+            gene,
+            urltemplate: urltemplate ?? "",
+          });
+          r = res.map(r => new NCListFeature(r));
+        } else {
+          r = await fetchTranscriptsTabix({
+            gffurl: gffurl ?? "",
+            refseq,
+            start,
+            end,
+            gene,
+          });
+        }
         setResult(r);
         sequenceFeatureDetails.setFeature(r[0]?.toJSON());
       } catch (e) {
@@ -63,6 +79,8 @@ const GenericGeneSeqPanel = observer(function ({
     })();
   }, [
     sequenceFeatureDetails,
+    adapterType,
+    gffurl,
     nclistbaseurl,
     fastaurl,
     refseq,
